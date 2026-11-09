@@ -1,0 +1,2594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <title>ANSH X STORE | ADMIN PRO</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    
+    <!-- 🔥 ZAPUPI PAYMENT GATEWAY SCRIPT 🔥 -->
+    <script src="https://zapupi.com/single-html-web-kit.js"></script>
+
+    <style>
+        /* --- CSS VARIABLES & THEMES --- */
+        :root {
+            --bg-dark: #050505;
+            --surface: #111111;
+            --surface-light: #1a1a1a;
+            --border: #2a2a2a;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent: #FFD600;
+            --accent-secondary: #FFB300;
+            --success: #00ff66;
+            --danger: #ff2a5f;
+            --warning: #ffb800;
+            --neon-crypto: #F3BA2F;
+            --master-color: #ff007f;
+            --sub-color: #7289da;
+            --sidebar-width: 260px;
+            --radius: 12px;
+            --shadow: 0 10px 30px rgba(0,0,0,0.5);
+            --font: 'Poppins', sans-serif;
+        }
+
+        body.light-theme {
+            --bg-dark: #f8fafc;
+            --surface: #ffffff;
+            --surface-light: #f1f5f9;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
+        html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+        body { background-color: var(--bg-dark); color: var(--text-main); overflow: hidden; transition: background-color 0.3s; }
+        
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* --- UTILITIES & GLASSMORPHISM --- */
+        .hidden { display: none !important; }
+        .glass { background: rgba(17, 17, 17, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border); }
+        body.light-theme .glass { background: rgba(255, 255, 255, 0.7); }
+
+        /* --- BUTTONS --- */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-size: 13px; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px; outline: none; }
+        .btn-primary { background: linear-gradient(135deg, var(--accent), #FFB300); color: #fff; box-shadow: 0 4px 15px rgba(255, 214, 0, 0.3); }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 214, 0, 0.5); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
+        .btn-outline:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: rgba(255, 214, 0, 0.05); }
+        .btn-danger { background: rgba(255, 42, 95, 0.1); color: var(--danger); border: 1px solid rgba(255, 42, 95, 0.2); }
+        .btn-danger:hover:not(:disabled) { background: var(--danger); color: #fff; box-shadow: 0 0 15px rgba(255, 42, 95, 0.4); }
+        .btn-success { background: rgba(0, 255, 102, 0.1); color: var(--success); border: 1px solid rgba(0, 255, 102, 0.2); }
+        .btn-success:hover:not(:disabled) { background: var(--success); color: #000; box-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
+        .btn-warning { background: rgba(255, 184, 0, 0.1); color: var(--warning); border: 1px solid rgba(255, 184, 0, 0.2); }
+        .btn-warning:hover:not(:disabled) { background: var(--warning); color: #000; box-shadow: 0 0 15px rgba(255, 184, 0, 0.4); }
+        .btn-info { background: rgba(255, 179, 0, 0.1); color: var(--accent-secondary); border: 1px solid rgba(255, 179, 0, 0.2); }
+        .btn-info:hover:not(:disabled) { background: var(--accent-secondary); color: #000; box-shadow: 0 0 15px rgba(255, 179, 0, 0.4); }
+        .btn-sm { padding: 6px 12px; font-size: 11px; border-radius: 6px; }
+        .btn-block { width: 100%; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); box-shadow: none !important; transform: none !important; }
+        .icon-btn { background: none; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer; transition: 0.3s; padding: 8px; border-radius: 8px; }
+        .icon-btn:hover { background: var(--surface-light); color: var(--accent); }
+
+        /* --- FORMS & INPUTS --- */
+        .form-group { margin-bottom: 20px; width: 100%; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 13px; color: var(--text-muted); font-weight: 500; }
+        .form-input { width: 100%; padding: 12px 16px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 8px; color: var(--text-main); outline: none; transition: 0.3s; font-size: 14px; }
+        body.light-theme .form-input { background: rgba(255,255,255,0.5); }
+        .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.1); }
+        .input-with-icon { position: relative; }
+        .input-with-icon .form-input { padding-left: 45px; }
+        .input-with-icon i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 16px; transition: 0.3s; }
+        .form-input:focus ~ i, .input-with-icon .form-input:focus + i { color: var(--accent); }
+
+        /* Toggle Switches */
+        .toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border); transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--success); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        /* --- BADGES --- */
+        .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 4px; }
+        .badge-pending { background: rgba(255, 184, 0, 0.15); color: var(--warning); border: 1px solid rgba(255, 184, 0, 0.3); }
+        .badge-approved, .badge-active, .badge-success { background: rgba(0, 255, 102, 0.15); color: var(--success); border: 1px solid rgba(0, 255, 102, 0.3); }
+        .badge-rejected, .badge-inactive, .badge-danger, .badge-suspended { background: rgba(255, 42, 95, 0.15); color: var(--danger); border: 1px solid rgba(255, 42, 95, 0.3); }
+        .badge-reseller { background: rgba(255, 179, 0, 0.15); color: var(--accent-secondary); border: 1px solid rgba(255, 179, 0, 0.3); }
+        .badge-master { background: rgba(255, 0, 127, 0.15); color: var(--master-color); border: 1px solid rgba(255, 0, 127, 0.3); }
+        .badge-sub { background: rgba(114, 137, 218, 0.15); color: var(--sub-color); border: 1px solid rgba(114, 137, 218, 0.3); }
+        .badge-user { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid rgba(255, 255, 255, 0.1); }
+
+        /* --- LOADER & TOAST --- */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(5px); transition: opacity 0.3s ease; }
+        .spinner { width: 45px; height: 45px; border: 4px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 99999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+        .toast { background: var(--surface); border: 1px solid var(--border); padding: 14px 20px; border-radius: var(--radius); color: var(--text-main); font-size: 13px; font-weight: 500; box-shadow: var(--shadow); pointer-events: all; display: flex; align-items: center; gap: 12px; animation: slideInRight 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .toast.success i { color: var(--success); }
+        .toast.error i { color: var(--danger); }
+        .toast.warning i { color: var(--warning); }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+
+        /* --- LOGIN SCREEN --- */
+        #auth-screen { height: 100vh; height: 100dvh; display: flex; justify-content: center; align-items: center; padding: 20px; background-image: radial-gradient(circle at top right, rgba(255, 214, 0, 0.1), transparent 40%), radial-gradient(circle at bottom left, rgba(255, 179, 0, 0.05), transparent 40%); }
+        .login-box { width: 100%; max-width: 420px; padding: 40px; border-radius: 20px; text-align: center; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+        .login-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent-secondary)); }
+        .login-logo { width: 60px; height: 60px; background: rgba(255, 214, 0, 0.1); border-radius: 16px; display: flex; justify-content: center; align-items: center; font-size: 28px; color: var(--accent); margin: 0 auto 20px; border: 1px solid rgba(255, 214, 0, 0.3); }
+
+        /* --- LAYOUT WRAPPER --- */
+        #main-layout { display: none; width: 100%; height: 100dvh; overflow: hidden; }
+        #main-layout[style*="display: block"] { display: flex !important; }
+
+        /* --- SIDEBAR --- */
+        .sidebar { width: var(--sidebar-width); background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000; flex-shrink: 0; }
+        .brand-container { height: 75px; display: flex; align-items: center; padding: 0 25px; border-bottom: 1px solid var(--border); }
+        .brand { font-size: 20px; font-weight: 800; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
+        
+        .nav-menu { flex: 1; padding: 20px 0; overflow-y: auto; list-style: none; }
+        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; color: var(--text-muted); cursor: pointer; transition: 0.3s; font-size: 13px; font-weight: 500; border-right: 3px solid transparent; margin-bottom: 5px; }
+        .nav-item i { width: 20px; text-align: center; font-size: 15px; }
+        .nav-item:hover { color: var(--text-main); background: rgba(255,255,255,0.03); }
+        .nav-item.active { color: var(--accent); background: rgba(255, 214, 0, 0.08); border-right-color: var(--accent); }
+
+        /* --- MAIN CONTENT AREA --- */
+        .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-dark); min-width: 0; }
+        
+        /* HEADER */
+        .header { height: 75px; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: var(--surface); z-index: 100; flex-shrink: 0; }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        .page-title-text { font-size: 20px; font-weight: 600; }
+        .badge-dot { position: absolute; top: 4px; right: 4px; background: var(--danger); color: #fff; font-size: 9px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid var(--surface); }
+
+        /* CONTENT SCROLL AREA */
+        .content { flex: 1; padding: 30px; overflow-y: auto; position: relative; }
+        .section-box { padding: 25px; border-radius: var(--radius); margin-bottom: 25px; }
+        .box-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+
+        /* --- DASHBOARD COMPONENTS --- */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px; }
+        .stat-card { padding: 20px; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--accent); }
+        .stat-info p { font-size: 12px; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        .stat-info h3 { font-size: 24px; color: var(--text-main); }
+        .stat-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 20px; color: #fff; }
+        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
+        
+        /* --- TABLES --- */
+        .table-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); width: 100%; margin-bottom: 25px; }
+        .table-header-controls { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.1); flex-wrap: wrap; gap: 15px; }
+        .search-box { position: relative; width: 300px; max-width: 100%; }
+        .search-box input { width: 100%; padding: 10px 15px 10px 40px; background: var(--bg-dark); border: 1px solid var(--border); border-radius: 30px; color: var(--text-main); outline: none; }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        
+        .table-responsive { max-height: 600px; overflow-y: auto; overflow-x: auto; width: 100%; display: block; }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        th { position: sticky; top: 0; background: var(--surface-light); text-align: left; padding: 15px 20px; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid var(--border); z-index: 10; color: var(--text-muted); }
+        td { padding: 15px 20px; font-size: 13px; border-bottom: 1px solid var(--border); color: var(--text-main); vertical-align: middle; }
+
+        /* --- ADD / MANAGE PANELS --- */
+        .add-panel-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
+        .panel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .panel-card { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; transition: all 0.3s ease; }
+        .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; border-bottom: 1px solid var(--border); }
+        .iframe-container iframe, .iframe-container img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; object-fit: cover; }
+        .panel-info { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+
+        /* --- NETWORK TREE --- */
+        .tree-container { padding: 20px; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; }
+        .tree-root { list-style: none; padding-left: 0; }
+        .tree-children { list-style: none; padding-left: 30px; position: relative; }
+        .tree-children::before { content: ''; position: absolute; top: 0; left: 10px; bottom: 0; width: 2px; background: var(--border); }
+        .tree-node { position: relative; margin: 10px 0; }
+        .tree-node::before { content: ''; position: absolute; top: 20px; left: -20px; width: 20px; height: 2px; background: var(--border); }
+        .tree-item { display: inline-flex; align-items: center; gap: 10px; padding: 10px 15px; background: var(--bg-dark); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .tree-item:hover { border-color: var(--accent); background: rgba(255, 214, 0, 0.05); }
+        .tree-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--surface-light); display: flex; justify-content: center; align-items: center; font-size: 12px; }
+        .tree-info { display: flex; flex-direction: column; }
+        .tree-name { font-size: 13px; font-weight: 600; }
+        .tree-role { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+
+        /* --- MODALS --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s ease; }
+        .modal-overlay:not(.hidden) { opacity: 1; visibility: visible; }
+        .modal { background: var(--surface); width: 90%; max-width: 500px; padding: 30px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 20px 50px #000; transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
+        .modal.lg { max-width: 800px; }
+        .modal-overlay:not(.hidden) .modal { transform: scale(1); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+
+        /* --- RESPONSIVE MOBILE FIXES --- */
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 999; }
+        
+        @media (max-width: 1024px) {
+            .dashboard-grid, .add-panel-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .sidebar { position: fixed; height: 100%; transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            #sidebar-toggle { display: block; }
+            .content { padding: 15px; }
+            .header { padding: 0 15px; }
+            .table-header-controls { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .search-box { width: 100%; }
+            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+            .modal { padding: 20px; }
+        }
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .header-right { gap: 8px; }
+            .page-title-text { font-size: 16px; }
+            .panel-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+    <div class="spinner"></div>
+    <div style="margin-top: 20px; color: var(--accent); font-weight: 600; letter-spacing: 2px;">AUTHENTICATING...</div>
+</div>
+
+<!-- TOAST -->
+<div id="toast-container"></div>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+    <div class="login-box glass">
+        <div class="login-logo"><i class="fas fa-bolt"></i></div>
+        <h2>Admin Pro Portal</h2>
+        <p>Sign in to manage your empire</p>
+        <div class="form-group" style="text-align: left; margin-top:20px;">
+            <label>Admin Email</label>
+            <div class="input-with-icon">
+                <input id="admin-email" type="email" class="form-input" placeholder="admin@example.com"/>
+                <i class="fas fa-envelope"></i>
+            </div>
+        </div>
+        <div class="form-group" style="text-align: left;">
+            <label>Password</label>
+            <div class="input-with-icon">
+                <input id="admin-pass" type="password" class="form-input" placeholder="••••••••"/>
+                <i class="fas fa-lock"></i>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-block" id="btn-login" style="padding: 14px; margin-top: 10px;">
+            SECURE LOGIN <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+        </button>
+    </div>
+</div>
+
+<!-- MAIN APP LAYOUT -->
+<div id="main-layout">
+    <!-- SIDEBAR OVERLAY FOR MOBILE -->
+    <div id="sidebar-overlay" class="sidebar-overlay hidden"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="brand-container">
+            <div class="brand">
+                <img id="admin-brand-logo" src="" style="display:none; width: 32px; height: 32px; border-radius: 8px; object-fit: cover;">
+                <i id="admin-brand-icon" class="fas fa-crown" style="color: var(--accent); font-size: 24px;"></i>
+                <span id="admin-brand-text" class="brand-text" style="background: linear-gradient(90deg, var(--accent), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ADMIN PRO</span>
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item active" data-target="dashboard"><i class="fas fa-th-large"></i> Dashboard Analytics</li>
+            
+            <li style="margin: 15px 25px 5px; font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Store & Products</li>
+            <li class="nav-item" data-target="purchase-plans"><i class="fas fa-tags"></i> Global Purchase Plans</li>
+            <li class="nav-item" data-target="add-panel"><i class="fas fa-plus-square"></i> Create New Panel</li>
+            <li class="nav-item" data-target="manage-panels"><i class="fas fa-box-open"></i> Manage Panels & Stock</li>
+            
+            <li style="margin: 15px 25px 5px; font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Reseller Network Empire</li>
+            <li class="nav-item" data-target="master-resellers"><i class="fas fa-user-shield"></i> Master Resellers</li>
+            <li class="nav-item" data-target="resellers"><i class="fas fa-user-tie"></i> Standard Resellers</li>
+            <li class="nav-item" data-target="sub-resellers"><i class="fas fa-user-astronaut"></i> Sub Resellers</li>
+            <li class="nav-item" data-target="permissions"><i class="fas fa-key"></i> Reseller Permissions</li>
+            <li class="nav-item" data-target="commissions"><i class="fas fa-percent"></i> Commission Settings</li>
+            <li class="nav-item" data-target="earnings"><i class="fas fa-chart-line"></i> Earnings & Payouts</li>
+            <li class="nav-item" data-target="referral-codes"><i class="fas fa-handshake"></i> Referral Codes</li>
+            <li class="nav-item" data-target="network-tree"><i class="fas fa-sitemap"></i> Network Tree View</li>
+
+            <li style="margin: 15px 25px 5px; font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Users & Deposits</li>
+            <li class="nav-item" data-target="users"><i class="fas fa-users"></i> Users Database</li>
+            <li class="nav-item" data-target="purchases"><i class="fas fa-shopping-cart"></i> Purchase History</li>
+            <li class="nav-item" data-target="gateway"><i class="fas fa-bolt"></i> Gateway Auto Deposits</li>
+            <li class="nav-item" data-target="payment-methods"><i class="fas fa-credit-card"></i> Payment Methods</li>
+            <li class="nav-item" data-target="crypto"><i class="fab fa-bitcoin"></i> Crypto Deposits</li>
+            <li class="nav-item" data-target="manual"><i class="fas fa-hand-holding-usd"></i> Manual Deposits</li>
+
+            <li style="margin: 15px 25px 5px; font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Marketing & Comms</li>
+            <li class="nav-item" data-target="promotions"><i class="fas fa-bullhorn"></i> Active Promotions</li>
+            <li class="nav-item" data-target="coupons"><i class="fas fa-ticket-alt"></i> Coupon System</li>
+            <li class="nav-item" data-target="notifications"><i class="fas fa-bell"></i> Push Notifications</li>
+            
+            <li style="margin: 15px 25px 5px; font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">System Configuration</li>
+            <li class="nav-item" data-target="settings"><i class="fas fa-qrcode"></i> Payment Gateways</li>
+            <li class="nav-item" data-target="contact"><i class="fas fa-headset"></i> Support Links</li>
+            <li class="nav-item" data-target="branding"><i class="fas fa-paint-brush"></i> Site Branding</li>
+            
+            <li class="nav-item" id="btn-logout" style="color: var(--danger); margin-top: 20px;"><i class="fas fa-power-off"></i> Secure Logout</li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <div class="main-wrapper">
+        <!-- HEADER -->
+        <header class="header glass">
+            <div class="header-left">
+                <button id="sidebar-toggle" class="icon-btn"><i class="fas fa-bars"></i></button>
+                <h2 id="page-title" class="page-title-text">Dashboard Analytics</h2>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="icon-btn" title="Toggle Theme"><i class="fas fa-sun"></i></button>
+                <button class="icon-btn" style="position: relative;" onclick="document.querySelector('.nav-item[data-target=\'manual\']').click()">
+                    <i class="fas fa-bell"></i>
+                    <span id="notif-badge" class="badge-dot" style="display:none;">0</span>
+                </button>
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--master-color), var(--accent)); display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold; border: 2px solid var(--surface); cursor: pointer;">
+                    AD
+                </div>
+            </div>
+        </header>
+
+        <!-- SCROLLABLE CONTENT -->
+        <main class="content">
+            
+            <!-- SECTION: DASHBOARD -->
+            <section class="page-section" id="sec-dashboard">
+                <div class="stats-grid">
+                    <!-- Advanced Analytics Overview -->
+                    <div class="stat-card glass" style="border-bottom: 3px solid var(--success);">
+                        <div class="stat-info">
+                            <p>Total Revenue</p>
+                            <h3 id="stat-revenue" class="currency">₹0.00</h3>
+                        </div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #00ff66, #008f39);"><i class="fas fa-wallet"></i></div>
+                    </div>
+                    <div class="stat-card glass" style="border-bottom: 3px solid var(--accent-secondary);">
+                        <div class="stat-info">
+                            <p>Today's Revenue</p>
+                            <h3 id="stat-rev-today" class="currency">₹0.00</h3>
+                        </div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #00f0ff, #0073ff);"><i class="fas fa-calendar-day"></i></div>
+                    </div>
+                    <div class="stat-card glass" style="border-bottom: 3px solid var(--accent);">
+                        <div class="stat-info">
+                            <p>Monthly Revenue</p>
+                            <h3 id="stat-rev-month" class="currency">₹0.00</h3>
+                        </div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--accent), #FFB300);"><i class="fas fa-calendar-alt"></i></div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-info">
+                            <p>Total Users</p>
+                            <h3 id="stat-users">0</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(255,255,255,0.1); color: var(--text-main);"><i class="fas fa-users"></i></div>
+                    </div>
+                    <div class="stat-card glass" style="border-bottom: 3px solid var(--master-color);">
+                        <div class="stat-info">
+                            <p>Master Resellers</p>
+                            <h3 id="stat-master-resellers">0</h3>
+                        </div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #ff007f, #aa0055);"><i class="fas fa-user-shield"></i></div>
+                    </div>
+                    <div class="stat-card glass" style="border-bottom: 3px solid var(--accent-secondary);">
+                        <div class="stat-info">
+                            <p>Total Resellers</p>
+                            <h3 id="stat-total-resellers">0</h3>
+                        </div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #00f0ff, #0073ff);"><i class="fas fa-user-tie"></i></div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-info">
+                            <p>Total Purchases</p>
+                            <h3 id="stat-total-purchases">0</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(255, 214, 0, 0.2); color: var(--accent);"><i class="fas fa-shopping-cart"></i></div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-info">
+                            <p>Pending Deposits</p>
+                            <h3 id="stat-pending-deposits">0</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(255, 184, 0, 0.2); color: var(--warning);"><i class="fas fa-clock"></i></div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-info">
+                            <p>Approved Deposits</p>
+                            <h3 id="stat-approved-deposits">0</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(0, 255, 102, 0.2); color: var(--success);"><i class="fas fa-check-circle"></i></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="section-box glass" style="min-height: 350px; display: flex; flex-direction: column;">
+                        <div class="box-header">
+                            <h3>Revenue Overview (Last 7 Days)</h3>
+                        </div>
+                        <div style="flex: 1; position: relative; width: 100%;">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="section-box glass">
+                        <div class="box-header">
+                            <h3>Recent Deposits</h3>
+                            <button class="btn btn-outline btn-sm" onclick="document.querySelector('.nav-item[data-target=\'gateway\']').click()">View All</button>
+                        </div>
+                        <div id="recent-payments-list">
+                            <div style="padding:20px; text-align:center; color:var(--text-muted);">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: GLOBAL PURCHASE PLANS -->
+            <section class="page-section hidden" id="sec-purchase-plans">
+                <div class="dashboard-grid">
+                    <div class="section-box glass">
+                        <div class="box-header"><h3><i class="fas fa-tags" style="color:var(--accent); margin-right:8px;"></i> Add Purchase Plan</h3></div>
+                        <div class="form-group"><label>Plan Name</label><input id="plan-name" class="form-input" placeholder="E.g., 30 Days Premium" type="text"/></div>
+                        <div class="form-group"><label>User Price (₹)</label><input id="plan-user-price" class="form-input" type="number"/></div>
+                        <div class="form-group"><label>Reseller Price (₹)</label><input id="plan-reseller-price" class="form-input" type="number"/></div>
+                        <div class="form-group"><label>Sort Order (1 = First)</label><input id="plan-sort" class="form-input" type="number" value="1"/></div>
+                        <button class="btn btn-primary btn-block" id="btn-add-global-plan"><i class="fas fa-plus"></i> CREATE PLAN</button>
+                    </div>
+                    <div class="table-container" style="align-self: start; margin-bottom: 0;">
+                        <div class="table-header-controls">
+                            <h3 style="font-size:16px;">Managed Plans</h3>
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('purchase-plans')"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>Order</th><th>Plan Details</th><th>Pricing</th><th>Status</th><th>Action</th></tr></thead>
+                                <tbody id="purchase-plans-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: ADD PANEL -->
+            <section class="page-section hidden" id="sec-add-panel">
+                <div class="add-panel-grid">
+                    <div class="section-box glass">
+                        <div class="box-header"><h3><i class="fas fa-edit" style="color:var(--accent); margin-right:8px;"></i> Panel Details</h3></div>
+                        <div class="form-group"><label>Panel Name</label><input id="add-p-name" class="form-input" placeholder="E.g., VIP Injector v1" type="text"/></div>
+                        <div class="form-group"><label>Logo Image URL</label><input id="add-p-logo" class="form-input" placeholder="https://..." type="url"/></div>
+                        <div class="form-group"><label>Category</label><input id="add-p-category" class="form-input" placeholder="E.g., Free Fire, BGMI" type="text"/></div>
+                        <div class="form-group">
+                            <label>Panel Type</label>
+                            <select id="add-p-type" class="form-input">
+                                <option value="">Normal</option>
+                                <option value="root">ROOT</option>
+                                <option value="nonroot">NON ROOT</option>
+                                <option value="rootnonroot">ROOT + NON ROOT</option>
+                                <option value="pc">PC</option>
+                                <option value="iphone">iPHONE</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Media Type</label>
+                            <select id="add-p-media-type" class="form-input">
+                                <option value="video">YouTube Video</option>
+                                <option value="image">Image Banner</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="group-add-p-yt"><label>YouTube Video Link</label><input id="add-p-yt" class="form-input" placeholder="https://www.youtube.com/watch?v=..." type="url"/></div>
+                        <div class="form-group hidden" id="group-add-p-image"><label>Image URL</label><input id="add-p-image" class="form-input" placeholder="https://..." type="url"/></div>
+                        <div class="form-group"><label>Update File Link</label><input id="add-p-link" class="form-input" placeholder="https://t.me/..." type="url"/></div>
+                        <div class="form-group"><label>Feedback Link (Optional)</label><input id="add-p-feedback" class="form-input" placeholder="https://t.me/..." type="url"/></div>
+                        <div class="form-group"><label>Description</label><textarea id="add-p-desc" class="form-input" placeholder="- Aimbot&#10;- Auto Headshot" rows="3"></textarea></div>
+                        <div style="background:rgba(255,214,0,0.05);padding:15px;border-radius:var(--radius);border:1px solid rgba(255,214,0,0.2);margin-bottom:20px;">
+                            <div style="font-weight:700;margin-bottom:12px;color:var(--accent);"><i class="fas fa-key"></i> Key Delivery Control</div>
+                            <div class="form-group" style="margin-bottom:12px;">
+                                <label>Key Delivery</label>
+                                <select id="add-p-delivery-mode" class="form-input">
+                                    <option value="auto_if_pid">Auto Key if PID is entered; Manual Stock if PID is blank</option>
+                                    <option value="manual">Force Manual Stock Key</option>
+                                </select>
+                            </div>
+                            <div id="auto-api-fields" class="hidden">
+                                <div class="form-group"><label>Product PID</label><input id="add-p-pid" class="form-input" placeholder="Exact Product PID"/></div>
+                                <div class="form-group"><label>API Duration</label><input id="add-p-duration" class="form-input" placeholder="1 Day / 3 Hours / 7 Days"/></div>
+                                <label style="display:flex;align-items:center;gap:10px;color:var(--text-muted);font-size:13px;">
+                                    <input id="add-p-android-required" type="checkbox" style="accent-color:var(--accent);">
+                                    Require Android ID
+                                </label>
+                                <p style="font-size:11px;color:var(--text-muted);margin-top:8px;">PID भरने पर Auto API Key चलेगा. PID खाली होने पर Manual Stock Key चलेगा. API credentials केवल server-side proxy में रखें.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 20px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                                <label style="margin:0; color:var(--text-main); font-weight:600;"><i class="fas fa-tags" style="color:var(--accent);"></i> Pricing Plans & Reseller</label>
+                                <button class="btn btn-outline btn-sm" id="btn-add-plan-row"><i class="fas fa-plus"></i> Add Plan</button>
+                            </div>
+                            <div id="plans-container">
+                                <div class="plan-row" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                    <input class="p-label form-input" placeholder="Plan (e.g. 1 Day)" required type="text" style="flex:2;"/>
+                                    <input class="p-price form-input" placeholder="User Price (₹)" required type="number"/>
+                                    <input class="p-reseller-price form-input" placeholder="Reseller Price (₹)" required type="number"/>
+                                    <button class="btn btn-danger btn-sm" onclick="this.parentElement.remove(); window.updateLivePreview();"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block" id="btn-submit-panel"><i class="fas fa-cloud-upload-alt"></i> PUBLISH PANEL</button>
+                    </div>
+
+                    <div>
+                        <div class="box-header"><h3 style="color:var(--text-muted);"><i class="fas fa-eye"></i> Live Preview</h3></div>
+                        <div class="panel-card glass" id="live-preview-card" style="pointer-events: none;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: MANAGE PANELS -->
+            <section class="page-section hidden" id="sec-manage-panels">
+                <div class="table-header-controls" style="background:transparent; border:none; padding:0 0 20px 0;">
+                    <h3 style="font-size:16px;"><i class="fas fa-box" style="color:var(--accent); margin-right:8px;"></i> Manage Panels & Stock</h3>
+                    <button class="btn btn-outline btn-sm" onclick="loadSection('manage-panels')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+                <div class="panel-grid" id="admin-panels-container"></div>
+            </section>
+
+            <!-- SECTION: MASTER RESELLERS -->
+            <section class="page-section hidden" id="sec-master-resellers">
+                <div class="table-container">
+                    <div class="table-header-controls">
+                        <h3 style="font-size:16px;"><i class="fas fa-user-shield" style="color:var(--master-color); margin-right:8px;"></i> Master Resellers Management</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('master-resellers')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-mresellers-input" placeholder="Search master resellers...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Info & Joined Date</th><th>Master Profile</th><th>Earnings / Balance</th><th>Status</th><th>Action</th></tr></thead>
+                            <tbody id="master-resellers-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: STANDARD RESELLERS -->
+            <section class="page-section hidden" id="sec-resellers">
+                <div class="table-container">
+                    <div class="table-header-controls">
+                        <h3 style="font-size:16px;"><i class="fas fa-user-tie" style="color:var(--accent-secondary); margin-right:8px;"></i> Standard Resellers Management</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('resellers')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-resellers-input" placeholder="Search standard resellers...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Info & Joined Date</th><th>Reseller Profile</th><th>Earnings / Balance</th><th>Status</th><th>Action</th></tr></thead>
+                            <tbody id="resellers-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: SUB RESELLERS -->
+            <section class="page-section hidden" id="sec-sub-resellers">
+                <div class="table-container">
+                    <div class="table-header-controls">
+                        <h3 style="font-size:16px;"><i class="fas fa-user-astronaut" style="color:var(--sub-color); margin-right:8px;"></i> Sub Resellers Management</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('sub-resellers')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-sresellers-input" placeholder="Search sub resellers...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Info & Joined Date</th><th>Sub Reseller Profile</th><th>Earnings / Balance</th><th>Status</th><th>Action</th></tr></thead>
+                            <tbody id="sub-resellers-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: RESELLER PERMISSIONS -->
+            <section class="page-section hidden" id="sec-permissions">
+                <div class="table-container">
+                    <div class="table-header-controls">
+                        <h3 style="font-size:16px;"><i class="fas fa-key" style="color:var(--warning); margin-right:8px;"></i> Reseller Permission Control</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('permissions')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-permissions-input" placeholder="Search by email or tier...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Reseller Info</th><th>Current Role</th><th>Active Permissions</th><th>Limits</th><th>Action</th></tr></thead>
+                            <tbody id="permissions-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: COMMISSIONS -->
+            <section class="page-section hidden" id="sec-commissions">
+                <div class="section-box glass" style="max-width: 700px; margin: 0 auto;">
+                    <div class="box-header"><h3><i class="fas fa-percent" style="color:var(--success); margin-right:8px;"></i> Global Commission Settings</h3></div>
+                    
+                    <div class="form-group">
+                        <label>Master Reseller Commission (%)</label>
+                        <input id="comm-master" class="form-input" type="number" min="0" max="100"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Standard Reseller Commission (%)</label>
+                        <input id="comm-reseller" class="form-input" type="number" min="0" max="100"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Sub Reseller Commission (%)</label>
+                        <input id="comm-sub" class="form-input" type="number" min="0" max="100"/>
+                    </div>
+                    <div style="border-top: 1px dashed var(--border); margin: 25px 0;"></div>
+                    <div class="form-group">
+                        <label>Extra Bonus Tier (%)</label>
+                        <input id="comm-extra" class="form-input" type="number" min="0" max="100"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Referral Bonus (%)</label>
+                        <input id="comm-referral" class="form-input" type="number" min="0" max="100"/>
+                    </div>
+                    <button class="btn btn-primary btn-block" id="btn-save-commissions" style="height: 55px;"><i class="fas fa-save"></i> SAVE COMMISSION RULES</button>
+                </div>
+            </section>
+
+            <!-- SECTION: EARNINGS & PAYOUTS -->
+            <section class="page-section hidden" id="sec-earnings">
+                <div class="stats-grid" id="earnings-stats-grid" style="margin-bottom: 20px;">
+                    <!-- Earnings Stats Injected -->
+                </div>
+                <div class="table-container">
+                    <div class="table-header-controls">
+                        <h3 style="font-size:16px;"><i class="fas fa-chart-line" style="color:var(--accent); margin-right:8px;"></i> Reseller Earnings Dashboard</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('earnings')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-earnings-input" placeholder="Search by email...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Reseller</th><th>Hierarchy Stats</th><th>Purchases (Total/Today)</th><th>Commissions (Bal/Pending/Paid)</th><th>Action</th></tr></thead>
+                            <tbody id="earnings-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: REFERRAL CODES -->
+            <section class="page-section hidden" id="sec-referral-codes">
+                <div class="dashboard-grid">
+                    <div class="section-box glass">
+                        <div class="box-header"><h3><i class="fas fa-handshake" style="color:var(--warning); margin-right:8px;"></i> Generate Referral Code</h3></div>
+                        <div class="form-group">
+                            <label>Code Prefix / Value</label>
+                            <div style="display:flex; gap:10px;">
+                                <input id="ref-code-input" class="form-input" style="text-transform: uppercase;" type="text" placeholder="e.g. VIP99999"/>
+                                <button class="btn btn-outline" onclick="document.getElementById('ref-code-input').value = 'PRO' + Math.floor(Math.random()*90000+10000);"><i class="fas fa-random"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group"><label>Assign Creator (UID or 'admin')</label><input id="ref-creator" class="form-input" type="text" value="admin"/></div>
+                        <div class="form-group"><label>Referral Bonus (%)</label><input id="ref-bonus" class="form-input" type="number" value="10"/></div>
+                        <div class="form-group"><label>Maximum Uses (Empty for ∞)</label><input id="ref-max" class="form-input" type="number" placeholder="∞"/></div>
+                        <button class="btn btn-primary btn-block" id="btn-add-referral"><i class="fas fa-plus"></i> GENERATE CODE</button>
+                    </div>
+                    <div class="table-container" style="align-self: start;">
+                        <div class="table-header-controls">
+                            <h3 style="font-size:16px;">Active Referral Codes</h3>
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('referral-codes')"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>Code</th><th>Creator</th><th>Bonus / Uses</th><th>Status</th><th>Action</th></tr></thead>
+                                <tbody id="referral-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: NETWORK TREE VIEW -->
+            <section class="page-section hidden" id="sec-network-tree">
+                <div class="section-box glass">
+                    <div class="box-header">
+                        <h3><i class="fas fa-sitemap" style="color:var(--accent); margin-right:8px;"></i> Reseller Network Tree View</h3>
+                        <div style="display:flex; gap:10px;">
+                            <input type="text" id="search-tree-input" class="form-input" style="width:250px; padding: 6px 15px;" placeholder="Search user in tree..." onkeyup="window.filterTree()"/>
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('network-tree')"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="tree-container" id="network-tree-container">
+                        <!-- Rendered recursively -->
+                        <div style="text-align:center; padding:20px;"><i class="fas fa-spinner fa-spin"></i> Building network...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: NOTIFICATION SYSTEM -->
+            <section class="page-section hidden" id="sec-notifications">
+                <div class="dashboard-grid">
+                    <div class="section-box glass">
+                        <div class="box-header"><h3><i class="fas fa-bell" style="color:var(--danger); margin-right:8px;"></i> Send Push Notification</h3></div>
+                        <div class="form-group"><label>Notification Title</label><input id="notif-title" class="form-input" placeholder="System Maintenance..." type="text"/></div>
+                        <div class="form-group"><label>Message Content</label><textarea id="notif-message" class="form-input" rows="4" placeholder="Detailed message..."></textarea></div>
+                        <div class="form-group">
+                            <label>Priority</label>
+                            <select id="notif-priority" class="form-input">
+                                <option value="normal">Normal Priority</option>
+                                <option value="high">High Priority</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Target Audience</label>
+                            <select id="notif-target" class="form-input">
+                                <option value="global">Global (All Users & Resellers)</option>
+                                <option value="resellers">All Resellers (Any Tier)</option>
+                                <option value="users">Regular Users Only</option>
+                                <option value="specific">Specific User UID</option>
+                            </select>
+                        </div>
+                        <div class="form-group hidden" id="group-notif-uid"><label>User UID</label><input id="notif-uid" class="form-input" type="text" placeholder="Enter UID..."/></div>
+                        <button class="btn btn-primary btn-block" id="btn-send-notif"><i class="fas fa-paper-plane"></i> DISPATCH NOTIFICATION</button>
+                    </div>
+                    <div class="table-container" style="align-self: start;">
+                        <div class="table-header-controls">
+                            <h3 style="font-size:16px;">Recent Dispatches</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>Date</th><th>Target & Priority</th><th>Title</th></tr></thead>
+                                <tbody id="notif-history-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: USERS TABLE -->
+            <section class="page-section hidden" id="sec-users">
+                <div class="table-container">
+                    <div class="table-header-controls">
+                        <h3 style="font-size:16px;">User Management Database</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('users')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-users-input" placeholder="Search by email or UID...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Joined Date</th><th>User Info</th><th>Balance</th><th>Role / Status</th><th>Action</th></tr></thead>
+                            <tbody id="users-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: GATEWAY PAYMENTS TABLE -->
+            <section class="page-section hidden" id="sec-gateway">
+                <div class="table-container">
+                    <div class="table-header-controls">
+                        <h3 style="font-size:16px;"><i class="fas fa-bolt" style="color:var(--danger); margin-right:8px;"></i> ZapUPI Gateway Payments</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('gateway')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-gateway-input" placeholder="Search by email, phone, or Order ID...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Date</th><th>User Info</th><th>Amount</th><th>Order ID / UTR</th><th>Status</th><th>Action</th></tr></thead>
+                            <tbody id="gateway-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: CRYPTO DEPOSITS TABLE -->
+            <section class="page-section hidden" id="sec-crypto">
+                <div class="table-container">
+                    <div class="table-header-controls">
+                        <h3 style="font-size:16px;"><i class="fab fa-bitcoin" style="color:var(--neon-crypto); margin-right:8px;"></i> Crypto Deposits</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('crypto')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-crypto-input" placeholder="Search by email or Hash...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Date</th><th>User Info</th><th>Amount</th><th>Hash & Note</th><th>Status</th><th>Action</th></tr></thead>
+                            <tbody id="crypto-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: MANUAL DEPOSITS TABLE -->
+            <section class="page-section hidden" id="sec-manual">
+                <div class="table-container">
+                    <div class="table-header-controls">
+                        <h3 style="font-size:16px;"><i class="fas fa-hand-holding-usd" style="color:var(--success); margin-right:8px;"></i> Manual Deposits</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('manual')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-manual-input" placeholder="Search by email, app, or UTR...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Date</th><th>User Info</th><th>Amount</th><th>App & UTR</th><th>Status</th><th>Action</th></tr></thead>
+                            <tbody id="manual-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: PURCHASES TABLE -->
+            <section class="page-section hidden" id="sec-purchases">
+                <div class="table-container">
+                    <div class="table-header-controls">
+                        <h3 style="font-size:16px;">Global Purchase History</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('purchases')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-purchases-input" placeholder="Search by email, panel or key...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Date</th><th>User / Reseller</th><th>Panel & Plan</th><th>Delivered Key</th><th>Action</th></tr></thead>
+                            <tbody id="purchases-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- SECTION: PAYMENT METHODS -->
+            <section class="page-section hidden" id="sec-payment-methods">
+                <div class="section-box glass" style="max-width:900px;margin:0 auto;">
+                    <div class="box-header"><h3><i class="fas fa-credit-card" style="color:var(--accent);margin-right:8px;"></i> Payment Methods</h3></div>
+                    <p style="color:var(--text-muted);font-size:12px;margin-bottom:20px;">Normal payment में Admin का UPI ID + QR दिखेगा और request manual approval में जाएगी. GetPay automatic checkout के लिए API credentials केवल payment_proxy.php server-side environment में रखें.</p>
+
+                    <div class="panel-grid">
+                        <div class="section-box" style="background:rgba(255,214,0,0.04);border:1px solid var(--border);">
+                            <h4 style="margin-bottom:15px;color:var(--accent);">Auto Gateway</h4>
+                            <div class="form-group"><label>Provider</label>
+                                <select id="pay-provider" class="form-input">
+                                    <option value="zapupi">ZapUPI</option>
+                                                                        <option value="getpay">GetPay</option>
+                                    <option value="custom">Custom Gateway</option>
+                                </select>
+                            </div>
+                            <div class="form-group"><label>Gateway Checkout URL</label><input id="pay-checkout-url" class="form-input" placeholder="https://..."/></div>
+                            <div class="form-group"><label>Webhook / Status URL</label><input id="pay-webhook-url" class="form-input" placeholder="https://..."/></div>
+                            <label style="display:flex;align-items:center;gap:10px;color:var(--text-muted);font-size:13px;">
+                                <input id="pay-auto-enabled" type="checkbox" style="accent-color:var(--accent);"> Enable Auto Gateway
+                            </label>
+                        </div>
+                        <div class="section-box" style="background:rgba(255,214,0,0.04);border:1px solid var(--border);">
+                            <h4 style="margin-bottom:15px;color:var(--accent);">Normal / Manual UPI</h4>
+                            <div class="form-group"><label>UPI ID</label><input id="pay-upi-id" class="form-input" placeholder="name@upi"/></div>
+                            <div class="form-group"><label>QR Image URL</label><input id="pay-qr-url" class="form-input" placeholder="https://..."/></div>
+                            <label style="display:flex;align-items:center;gap:10px;color:var(--text-muted);font-size:13px;">
+                                <input id="pay-manual-enabled" type="checkbox" style="accent-color:var(--accent);" checked> Enable Manual UPI
+                            </label>
+                            <p style="font-size:11px;color:var(--text-muted);margin-top:10px;">Users can submit amount + UTR + screenshot; admin approves/rejects from Manual Deposits.</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="btn-save-payment-methods" style="width:100%;margin-top:10px;"><i class="fas fa-save"></i> SAVE PAYMENT SETTINGS</button>
+                </div>
+            </section>
+
+            <!-- SECTION: PROMOTIONS SYSTEM -->
+            <section class="page-section hidden" id="sec-promotions">
+                <div class="dashboard-grid">
+                    <div class="section-box glass">
+                        <div class="box-header"><h3><i class="fas fa-bullhorn" style="color:var(--accent); margin-right:8px;"></i> Add Promotion</h3></div>
+                        <div class="form-group"><label>Title (Required)</label><input id="promo-title" class="form-input" placeholder="E.g., Diwali Special Offer" type="text"/></div>
+                        <div class="form-group"><label>Image URL</label><input id="promo-img" class="form-input" placeholder="https://..." type="url"/></div>
+                        <div class="form-group"><label>Redirect Link (Optional)</label><input id="promo-link" class="form-input" placeholder="https://..." type="url"/></div>
+                        <button class="btn btn-primary btn-block" id="btn-add-promo"><i class="fas fa-plus"></i> PUBLISH PROMOTION</button>
+                    </div>
+                    <div class="section-box glass">
+                        <div class="box-header">
+                            <h3>Active Promotions</h3>
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('promotions')"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                        <div id="promotions-list" style="display: flex; flex-direction: column; gap: 15px;">
+                            <div style="padding:20px; text-align:center; color:var(--text-muted);">Loading promotions...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: COUPONS SYSTEM -->
+            <section class="page-section hidden" id="sec-coupons">
+                <div class="dashboard-grid">
+                    <div class="section-box glass">
+                        <div class="box-header"><h3><i class="fas fa-ticket-alt" style="color:var(--accent); margin-right:8px;"></i> Add Coupon Code</h3></div>
+                        <div class="form-group"><label>Coupon Code</label><input id="coupon-code" class="form-input" style="text-transform: uppercase;" type="text"/></div>
+                        <div class="form-group"><label>Discount (%)</label><input id="coupon-discount" class="form-input" type="number" min="1" max="100"/></div>
+                        <div class="form-group"><label>Max Usage</label><input id="coupon-max" class="form-input" placeholder="Empty for unlimited" type="number"/></div>
+                        <button class="btn btn-primary btn-block" id="btn-add-coupon"><i class="fas fa-plus"></i> CREATE COUPON</button>
+                    </div>
+                    <div class="table-container" style="align-self: start;">
+                        <div class="table-header-controls">
+                            <h3 style="font-size:16px;">Managed Coupons</h3>
+                            <button class="btn btn-outline btn-sm" onclick="loadSection('coupons')"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>Code</th><th>Discount</th><th>Usage</th><th>Status</th><th>Action</th></tr></thead>
+                                <tbody id="coupons-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: PAYMENT SETTINGS -->
+            <section class="page-section hidden" id="sec-settings">
+                <div class="dashboard-grid">
+                    <div class="section-box glass">
+                        <div class="box-header"><h3><i class="fas fa-bolt" style="color:var(--danger); margin-right:8px;"></i> Gateway & UPI Settings</h3></div>
+                        <div class="form-group"><label>ZapUPI API Key</label><input id="set-zap-key" class="form-input" type="text" placeholder="Enter your ZapUPI Key"/></div>
+                        <div style="border-top: 1px dashed var(--border); margin: 25px 0;"></div>
+                        <div class="form-group"><label>Manual Deposit UPI ID</label><input id="set-upi" class="form-input" type="text" placeholder="yourname@upi"/></div>
+                        <div class="form-group"><label>Manual Deposit QR Code URL</label><input id="set-qr" class="form-input" type="url" placeholder="https://..."/></div>
+                        <div id="qr-preview" style="margin-bottom: 20px; text-align: center;"></div>
+                    </div>
+
+                    <div class="section-box glass">
+                        <div class="box-header"><h3><i class="fab fa-bitcoin" style="color:var(--neon-crypto); margin-right:8px;"></i> Crypto Settings</h3></div>
+                        <div class="form-group"><label>Binance Pay ID</label><input id="set-crypto-payid" class="form-input" type="text" placeholder="e.g., 123456789"/></div>
+                        <div class="form-group"><label>USDT Address (TRC20)</label><input id="set-crypto-address" class="form-input" type="text" placeholder="T..."/></div>
+                        <div class="form-group"><label>Crypto Rate (1 USDT = ₹)</label><input id="set-crypto-rate" class="form-input" type="number" placeholder="88.00"/></div>
+                        <div class="form-group"><label>Crypto QR Code URL</label><input id="set-crypto-qr" class="form-input" type="url" placeholder="https://..."/></div>
+                        <div id="crypto-qr-preview" style="margin-bottom: 20px; text-align: center;"></div>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" id="btn-save-settings" style="height: 55px; font-size: 15px; max-width: 600px; margin: 0 auto; display: block;"><i class="fas fa-save"></i> SAVE ALL DEPOSIT SETTINGS</button>
+            </section>
+
+            <!-- SECTION: CONTACT SETTINGS -->
+            <section class="page-section hidden" id="sec-contact">
+                <div class="section-box glass" style="max-width: 600px; margin: 0 auto;">
+                    <div class="box-header"><h3><i class="fas fa-headset" style="color:var(--accent); margin-right:8px;"></i> Dynamic Support Links</h3></div>
+                    <div class="form-group"><label>WhatsApp Link</label><input id="set-wa" class="form-input" placeholder="https://wa.me/..." type="url"/></div>
+                    <div class="form-group"><label>Telegram Link (Login Page Button)</label><input id="set-tg-login" class="form-input" placeholder="https://t.me/..." type="url"/></div>
+                    <div class="form-group"><label>Telegram Link (Dashboard Floating Button)</label><input id="set-tg-dash" class="form-input" placeholder="https://t.me/..." type="url"/></div>
+                    <button class="btn btn-primary btn-block" id="btn-save-contact"><i class="fas fa-save"></i> UPDATE SUPPORT LINKS</button>
+                </div>
+            </section>
+            
+            <!-- SECTION: BRANDING -->
+            <section class="page-section hidden" id="sec-branding">
+                <div class="section-box glass" style="max-width: 600px; margin: 0 auto;">
+                    <div class="box-header"><h3><i class="fas fa-paint-brush" style="color:var(--accent); margin-right:8px;"></i> Site Branding</h3></div>
+                    <div class="form-group"><label>Site Name</label><input id="brand-name" class="form-input" type="text"/></div>
+                    <div class="form-group"><label>Logo Image URL</label><input id="brand-logo" class="form-input" type="url"/></div>
+                    <button class="btn btn-primary btn-block" id="btn-save-branding"><i class="fas fa-save"></i> UPDATE BRANDING</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- GLOBAL MODALS AREA                         -->
+<!-- ========================================== -->
+
+<!-- MODAL: MANAGE USER ROLE (ADVANCED) -->
+<div class="modal-overlay hidden" id="modal-role">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 style="color:var(--text-main); font-size:18px;"><i class="fas fa-user-tag" style="color:var(--accent);"></i> Manage User Role</h3>
+            <button class="modal-close icon-btn" onclick="closeModal('modal-role')"><i class="fas fa-times"></i></button>
+        </div>
+        <input id="edit-role-uid" type="hidden"/>
+        <div class="form-group">
+            <label>Current Role</label>
+            <input disabled id="edit-role-current" class="form-input" style="color:var(--warning); font-weight: bold;" type="text"/>
+        </div>
+        <div class="form-group">
+            <label>Assign New Role</label>
+            <select id="edit-role-new" class="form-input" style="appearance: none;">
+                <option value="user">Regular User</option>
+                <option value="sub_reseller">Sub Reseller (Tier 3)</option>
+                <option value="reseller">Standard Reseller (Tier 2)</option>
+                <option value="master_reseller">Master Reseller (Tier 1)</option>
+            </select>
+        </div>
+        <button class="btn btn-primary btn-block" id="btn-save-role" style="height: 50px;">Apply Role Update</button>
+    </div>
+</div>
+
+<!-- MODAL: EDIT PERMISSIONS -->
+<div class="modal-overlay hidden" id="modal-edit-permissions">
+    <div class="modal lg">
+        <div class="modal-header">
+            <h3 style="color:var(--text-main); font-size:18px;"><i class="fas fa-user-shield"></i> Reseller Permissions for <span id="perm-user-email" style="color:var(--accent);"></span></h3>
+            <button class="modal-close icon-btn" onclick="closeModal('modal-edit-permissions')"><i class="fas fa-times"></i></button>
+        </div>
+        <input id="perm-uid" type="hidden"/>
+        
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+            <!-- Toggles -->
+            <div style="display:flex; flex-direction:column; gap:15px; background:rgba(0,0,0,0.2); padding:20px; border-radius:12px; border:1px solid var(--border);">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:13px; font-weight:500;">Can Create Reseller</span>
+                    <label class="toggle-switch"><input type="checkbox" id="perm-create-reseller"><span class="slider"></span></label>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:13px; font-weight:500;">Can Create Sub Reseller</span>
+                    <label class="toggle-switch"><input type="checkbox" id="perm-create-sub"><span class="slider"></span></label>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:13px; font-weight:500;">Can Create Referral Codes</span>
+                    <label class="toggle-switch"><input type="checkbox" id="perm-create-ref"><span class="slider"></span></label>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:13px; font-weight:500;">Can Manage Sub-Users</span>
+                    <label class="toggle-switch"><input type="checkbox" id="perm-manage-users"><span class="slider"></span></label>
+                </div>
+            </div>
+            
+            <div style="display:flex; flex-direction:column; gap:15px; background:rgba(0,0,0,0.2); padding:20px; border-radius:12px; border:1px solid var(--border);">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:13px; font-weight:500;">Can View Advanced Earnings</span>
+                    <label class="toggle-switch"><input type="checkbox" id="perm-view-earnings"><span class="slider"></span></label>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:13px; font-weight:500;">Can Withdraw Commission</span>
+                    <label class="toggle-switch"><input type="checkbox" id="perm-withdraw"><span class="slider"></span></label>
+                </div>
+                
+                <div style="margin-top:10px;">
+                    <label style="font-size:12px; color:var(--text-muted);">Max Reseller Limit (0 = ∞)</label>
+                    <input type="number" id="perm-max-limit" class="form-input" style="margin-top:5px;" value="0">
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn btn-primary btn-block" id="btn-save-permissions" style="margin-top:20px; height:50px;">Save Permissions</button>
+    </div>
+</div>
+
+<!-- MODAL: EDIT PURCHASE PLAN -->
+<div class="modal-overlay hidden" id="modal-edit-plan">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 style="color:var(--text-main); font-size:18px;">Edit Purchase Plan</h3>
+            <button class="modal-close icon-btn" onclick="closeModal('modal-edit-plan')"><i class="fas fa-times"></i></button>
+        </div>
+        <input id="edit-gplan-id" type="hidden"/>
+        <div class="form-group"><label>Plan Name</label><input id="edit-gplan-name" class="form-input" type="text"/></div>
+        <div class="form-group"><label>User Price (₹)</label><input id="edit-gplan-user-price" class="form-input" type="number"/></div>
+        <div class="form-group"><label>Reseller Price (₹)</label><input id="edit-gplan-reseller-price" class="form-input" type="number"/></div>
+        <div class="form-group"><label>Sort Order</label><input id="edit-gplan-sort" class="form-input" type="number"/></div>
+        <button class="btn btn-primary btn-block" id="btn-save-gplan" style="height: 50px;">Update Plan</button>
+    </div>
+</div>
+
+<!-- MODAL: VIEW IMAGE -->
+<div class="modal-overlay hidden" id="modal-image">
+    <div class="modal" style="max-width: 500px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 15px;">
+            <h3 style="color:var(--text-main); font-size:16px;">Preview Image</h3>
+            <button class="modal-close icon-btn" onclick="closeModal('modal-image')"><i class="fas fa-times"></i></button>
+        </div>
+        <img id="preview-image" src="" style="width:100%; border-radius:12px; border: 1px solid var(--border); max-height: 60vh; object-fit: contain; background: #000;">
+        <a id="preview-link" href="#" target="_blank" class="btn btn-outline btn-block" style="margin-top: 15px; height: 45px;"><i class="fas fa-external-link-alt"></i> Open Original</a>
+    </div>
+</div>
+
+<!-- MODAL: EDIT BALANCE (Existing) -->
+<div class="modal-overlay hidden" id="modal-balance">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 style="color:var(--text-main); font-size:18px;">Edit User Balance</h3>
+            <button class="modal-close icon-btn" onclick="closeModal('modal-balance')"><i class="fas fa-times"></i></button>
+        </div>
+        <input id="edit-bal-uid" type="hidden"/>
+        <div class="form-group"><label>Current (₹)</label><input disabled id="edit-bal-current" class="form-input" style="color:var(--success); font-weight: bold;" type="text"/></div>
+        <div class="form-group">
+            <label>Action</label>
+            <select id="edit-bal-type" class="form-input" style="appearance: none;">
+                <option value="add">Add Funds (+)</option>
+                <option value="deduct">Deduct Funds (-)</option>
+                <option value="set">Set Exact Balance (=)</option>
+            </select>
+        </div>
+        <div class="form-group"><label>Amount (₹)</label><input id="edit-bal-amount" class="form-input" type="number"/></div>
+        <button class="btn btn-primary btn-block" id="btn-save-balance" style="height: 50px;">Confirm Update</button>
+    </div>
+</div>
+
+<!-- MODAL: STOCK MANAGEMENT (Existing) -->
+<div class="modal-overlay hidden" id="modal-stock">
+    <div class="modal" style="max-width: 650px;">
+        <div class="modal-header">
+            <h3 style="color:var(--text-main); font-size:18px;"><i class="fas fa-key" style="color:var(--warning);"></i> Manage Key Stock</h3>
+            <button class="modal-close icon-btn" onclick="closeModal('modal-stock')"><i class="fas fa-times"></i></button>
+        </div>
+        <input id="stock-panel-id" type="hidden"/>
+        <div class="form-group">
+            <label>Select Plan to Add/View Stock</label>
+            <select id="stock-plan-select" class="form-input" style="appearance: none; cursor:pointer;" onchange="window.loadSelectedPlanStock()"></select>
+        </div>
+        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px;">
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">Manual mode में यही stock user को delivery होगा. Auto mode में PID/API से नया key generate होगा.</div>
+            <div class="form-group"><label>Upload New Keys (One Key Per Line)</label><textarea id="stock-keys-input" class="form-input" rows="5" placeholder="KEY-ABCD-1234&#10;KEY-EFGH-5678"></textarea></div>
+            <button class="btn btn-primary btn-block" onclick="window.uploadStockKeys()"><i class="fas fa-upload"></i> UPLOAD KEYS</button>
+        </div>
+        <div class="box-header" style="margin-bottom: 10px;">
+            <h4 style="font-size: 14px;">Available Stock: <span id="stock-available-count" style="color:var(--success);">0</span></h4>
+            <h4 style="font-size: 14px;">Used Keys: <span id="stock-used-count" style="color:var(--danger);">0</span></h4>
+        </div>
+        <div class="table-responsive" style="max-height: 250px; border: 1px solid var(--border); border-radius: 8px;">
+            <table><thead><tr><th>Key</th><th>Status</th><th>Used By</th><th>Action</th></tr></thead><tbody id="stock-keys-tbody"></tbody></table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: EDIT PANEL (Existing) -->
+<div class="modal-overlay hidden" id="modal-edit-panel">
+    <div class="modal" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3 style="color:var(--text-main); font-size:18px;">Edit Panel Info</h3>
+            <button class="modal-close icon-btn" onclick="closeModal('modal-edit-panel')"><i class="fas fa-times"></i></button>
+        </div>
+        <input id="edit-p-id" type="hidden"/>
+        <div class="form-group"><label>Panel Name</label><input id="edit-p-name" class="form-input" type="text"/></div>
+        <div class="form-group"><label>Logo Image URL</label><input id="edit-p-logo" class="form-input" type="url"/></div>
+        <div class="form-group"><label>Category</label><input id="edit-p-category" class="form-input" type="text"/></div>
+        
+        <div class="form-group">
+            <label>Media Type</label>
+            <select id="edit-p-media-type" class="form-input">
+                <option value="video">YouTube Video</option>
+                <option value="image">Image Banner</option>
+            </select>
+        </div>
+        <div class="form-group" id="group-edit-p-yt"><label>YouTube Link</label><input id="edit-p-yt" class="form-input" type="url"/></div>
+        <div class="form-group hidden" id="group-edit-p-image"><label>Image URL</label><input id="edit-p-image" class="form-input" type="url"/></div>
+
+        <div class="form-group"><label>Download / Update Link</label><input id="edit-p-link" class="form-input" type="url"/></div>
+        <div class="form-group"><label>Feedback / Telegram Link</label><input id="edit-p-feedback" class="form-input" type="url"/></div>
+        <div class="form-group"><label>Description & Features</label><textarea id="edit-p-desc" class="form-input" rows="4"></textarea></div>
+        
+        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 25px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px;">
+                <label style="margin:0; color:var(--text-main); font-weight:700;"><i class="fas fa-tags" style="color:var(--accent);"></i> Pricing Plans</label>
+                <button class="btn btn-outline btn-sm" onclick="window.addEditPlanRow()"><i class="fas fa-plus"></i> Add Plan</button>
+            </div>
+            <div id="edit-plans-container" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        </div>
+        <button class="btn btn-primary btn-block" id="btn-save-edit-panel" style="height: 50px;">Save Changes</button>
+    </div>
+</div>
+
+<!-- MODAL: EDIT PROMOTION (Existing) -->
+<div class="modal-overlay hidden" id="modal-edit-promo">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 style="color:var(--text-main); font-size:18px;">Edit Promotion</h3>
+            <button class="modal-close icon-btn" onclick="closeModal('modal-edit-promo')"><i class="fas fa-times"></i></button>
+        </div>
+        <input id="edit-promo-id" type="hidden"/>
+        <div class="form-group"><label>Title</label><input id="edit-promo-title" class="form-input" type="text"/></div>
+        <div class="form-group"><label>Image URL</label><input id="edit-promo-img" class="form-input" type="url"/></div>
+        <div class="form-group"><label>Redirect Link</label><input id="edit-promo-link" class="form-input" type="url"/></div>
+        <button class="btn btn-primary btn-block" id="btn-save-edit-promo" style="height: 50px;">Save Changes</button>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- FIREBASE & LOGIC (PURE JS)                 -->
+<!-- ========================================== -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } 
+        from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getDatabase, ref, get, set, update, remove, onValue, push, runTransaction, serverTimestamp, query, limitToLast } 
+        from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+  apiKey: "AIzaSyCIXgonf_W6dAMTjcda9UkE2Hbo9ggpl9o",
+  authDomain: "adminpanels-shop.firebaseapp.com",
+  databaseURL: "https://adminpanels-shop-default-rtdb.firebaseio.com",
+  projectId: "adminpanels-shop",
+  storageBucket: "adminpanels-shop.firebasestorage.app",
+  messagingSenderId: "721912688604",
+  appId: "1:721912688604:web:953a2cea9594fb3a1aa919"
+
+    const ALLOWED_ADMINS = ["anshxstore@gmail.com"];
+
+    let app, auth, db;
+    try {
+        app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getDatabase(app);
+    } catch (e) { console.error("Firebase Init Error:", e); }
+
+    const loader = document.getElementById('loader');
+    
+    // Global Caches
+    let usersDataCache = {};
+    let panelsDataCache = {}; 
+    let promotionsDataCache = {}; 
+    let revChart = null;
+    window.ZAP_KEY = "";
+
+    // Utilities
+    window.showLoader = () => { loader.style.display = 'flex'; setTimeout(() => loader.style.opacity = '1', 10); };
+    window.hideLoader = () => { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 300); };
+    
+    window.showToast = (msg, type = 'success') => {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        let icon = type === 'error' ? 'fa-exclamation-circle' : (type === 'warning' ? 'fa-exclamation-triangle' : 'fa-check-circle');
+        toast.innerHTML = `<i class="fas ${icon}"></i> <span>${msg}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.style.animation = 'slideOutRight 0.3s forwards'; setTimeout(() => toast.remove(), 300); }, 3000);
+    };
+
+    window.closeModal = (id) => document.getElementById(id).closest('.modal-overlay').classList.add('hidden');
+    window.openModal = (id) => document.getElementById(id).classList.remove('hidden');
+
+    window.openImageModal = (url) => {
+        document.getElementById('preview-image').src = url;
+        document.getElementById('preview-link').href = url;
+        openModal('modal-image');
+    };
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => { if(e.target === overlay) overlay.classList.add('hidden'); });
+    });
+
+    // Theme logic
+    const themeToggle = document.getElementById('theme-toggle');
+    if((localStorage.getItem('adminTheme') || 'dark') === 'light') { document.body.classList.add('light-theme'); themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; }
+    themeToggle.onclick = () => {
+        document.body.classList.toggle('light-theme');
+        const isLight = document.body.classList.contains('light-theme');
+        localStorage.setItem('adminTheme', isLight ? 'light' : 'dark');
+        themeToggle.innerHTML = isLight ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+    };
+
+    // --- AUTHENTICATION ---
+    onAuthStateChanged(auth, async (user) => {
+        hideLoader(); 
+        if (user && ALLOWED_ADMINS.includes(user.email)) {
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('main-layout').style.display = 'flex';
+            
+            initBranding(); 
+            get(ref(db, 'users')).then(snap => { usersDataCache = snap.val() || {}; });
+            get(ref(db, 'settings/payment')).then(snap => { 
+                if(snap.exists() && snap.val().zap_key) {
+                    window.ZAP_KEY = snap.val().zap_key;
+                } else {
+                    get(ref(db, 'deposit_settings')).then(depSnap => {
+                        if(depSnap.exists()) window.ZAP_KEY = depSnap.val().zap_key || '';
+                    });
+                }
+            });
+            
+            document.querySelector('.nav-item[data-target="dashboard"]').click();
+        } else { 
+            if(user) await signOut(auth); 
+            document.getElementById('main-layout').style.display = 'none';
+            document.getElementById('auth-screen').classList.remove('hidden');
+        }
+    });
+
+    document.getElementById('btn-login').onclick = async () => {
+        const email = document.getElementById('admin-email').value.trim();
+        const pass = document.getElementById('admin-pass').value;
+        if(!email || !pass) return showToast("Enter credentials", "error");
+        if (!ALLOWED_ADMINS.includes(email)) return showToast("Unauthorized Email", "error");
+
+        showLoader();
+        try { await signInWithEmailAndPassword(auth, email, pass); } catch (e) { showToast("Invalid Credentials", "error"); hideLoader(); }
+    };
+    document.getElementById('btn-logout').onclick = async () => { showLoader(); await signOut(auth); };
+
+    // --- NAVIGATION & ROUTER ---
+    window.loadSection = (target) => {
+        showLoader();
+        setTimeout(async () => {
+            try {
+                // Ensure users DB is fresh for related tables
+                const usersSnap = await get(ref(db, 'users'));
+                usersDataCache = usersSnap.val() || {};
+
+                switch(target) {
+                    case 'dashboard': await initDashboardStats(); break;
+                    case 'purchase-plans': await initPurchasePlansTable(); break;
+                    case 'manage-panels': await initPanelsTable(); break;
+                    
+                    case 'master-resellers': await initMasterResellersTable(); break;
+                    case 'resellers': await initResellersTable(); break;
+                    case 'sub-resellers': await initSubResellersTable(); break;
+                    case 'permissions': await initPermissionsTable(); break;
+                    case 'commissions': await initCommissions(); break;
+                    case 'earnings': await initEarningsTable(); break;
+                    case 'referral-codes': await initReferralCodesTable(); break;
+                    case 'network-tree': await initNetworkTree(); break;
+
+                    case 'users': await initUsersTable(); break;
+                    case 'purchases': await initPurchasesTable(); break;
+                    case 'gateway': await initGatewayTable(); break;
+                    case 'crypto': await initCryptoTable(); break;
+                    case 'manual': await initManualTable(); break;
+
+                    case 'promotions': await initPromotionsTable(); break;
+                    case 'coupons': await initCouponsTable(); break;
+                    case 'notifications': await initNotifications(); break;
+
+                    case 'settings': 
+                    case 'contact': 
+                    case 'branding': await initSettings(); break;
+                }
+            } catch(e) { console.error(e); showToast("Error loading data", "error"); }
+            hideLoader();
+        }, 50); 
+    };
+
+    document.querySelectorAll('.nav-item[data-target]').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            item.classList.add('active');
+            
+            const target = item.getAttribute('data-target');
+            document.getElementById('page-title').innerText = item.innerText;
+            
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById(`sec-${target}`).classList.remove('hidden');
+            
+            if(window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+                document.getElementById('sidebar-overlay').classList.add('hidden');
+            }
+
+            window.loadSection(target);
+        });
+    });
+
+    document.getElementById('sidebar-toggle').onclick = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebar-overlay').classList.remove('hidden'); };
+    document.getElementById('sidebar-overlay').onclick = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').classList.add('hidden'); };
+
+    // Common Helpers
+    function extractYTId(url) {
+        if(!url) return null;
+        if(url.length === 11 && !url.includes('/')) return url;
+        const match = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+        return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    window.animateCounter = (id, start, end, duration, isCurrency = false) => {
+        let obj = document.getElementById(id);
+        if (!obj || start === end) return;
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            let val = progress * (end - start) + start;
+            obj.innerHTML = isCurrency ? '₹' + val.toFixed(2) : Math.floor(val);
+            if (progress < 1) window.requestAnimationFrame(step);
+            else obj.innerHTML = isCurrency ? '₹' + end.toFixed(2) : end;
+        };
+        window.requestAnimationFrame(step);
+    };
+
+    // Generic search binder
+    ['users', 'mresellers', 'resellers', 'sresellers', 'permissions', 'earnings', 'gateway', 'manual', 'crypto', 'purchases'].forEach(type => {
+        document.getElementById(`search-${type}-input`)?.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll(`#${type === 'mresellers' ? 'master-resellers' : type === 'sresellers' ? 'sub-resellers' : type}-tbody tr`).forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(term) ? '' : 'none';
+            });
+        });
+    });
+
+    // ==========================================
+    // MODULE: DASHBOARD & ANALYTICS
+    // ==========================================
+    let dashListenersSetup = false;
+    async function initDashboardStats() {
+        if(!dashListenersSetup) {
+            dashListenersSetup = true;
+            const listenPending = (path, elementId) => {
+                onValue(query(ref(db, path), limitToLast(200)), snap => {
+                    let pending = 0;
+                    snap.forEach(child => { if(child.val().status === 'pending') pending++; });
+                    document.getElementById(elementId).innerText = pending;
+                    updateTotalPendingBadge();
+                });
+            };
+            listenPending('gateway_payments', 'stat-pending-deposits');
+            
+            onValue(ref(db, 'users'), snap => {
+                const data = snap.val() || {};
+                let counts = { u:0, m:0, r:0, s:0 };
+                for(let key in data){
+                    counts.u++;
+                    if(data[key].role === 'master_reseller') counts.m++;
+                    if(data[key].role === 'reseller') counts.r++;
+                    if(data[key].role === 'sub_reseller') counts.s++;
+                }
+                document.getElementById('stat-users').innerText = counts.u;
+                document.getElementById('stat-master-resellers').innerText = counts.m;
+                document.getElementById('stat-total-resellers').innerText = counts.r + counts.s;
+            });
+
+            onValue(ref(db, 'purchases'), snap => {
+                let pCount = 0;
+                snap.forEach(userPurchases => { pCount += Object.keys(userPurchases.val() || {}).length; });
+                document.getElementById('stat-total-purchases').innerText = pCount;
+            });
+        }
+
+        const [gSnap, mSnap, cSnap] = await Promise.all([
+            get(query(ref(db, 'gateway_payments'), limitToLast(1000))),
+            get(query(ref(db, 'manual_deposits'), limitToLast(1000))),
+            get(query(ref(db, 'crypto_deposits'), limitToLast(1000)))
+        ]);
+
+        let allDeposits = [];
+        gSnap.forEach(c => { let v = c.val(); v.id = c.key; allDeposits.push(v); });
+        mSnap.forEach(c => { let v = c.val(); v.id = c.key; allDeposits.push(v); });
+        cSnap.forEach(c => { let v = c.val(); v.id = c.key; allDeposits.push(v); });
+
+        updateAdvancedStats(allDeposits);
+    }
+
+    function updateTotalPendingBadge() {
+        let p = parseInt(document.getElementById('stat-pending-deposits').innerText)||0;
+        const badge = document.getElementById('notif-badge');
+        if(p > 0) { badge.innerText = p; badge.style.display = 'flex'; } else { badge.style.display = 'none'; }
+    }
+
+    function updateAdvancedStats(deposits) {
+        let revTotal = 0, revToday = 0, revMonth = 0, approvedCount = 0;
+        
+        const now = new Date();
+        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+
+        deposits.sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0));
+        
+        deposits.forEach(p => {
+            if (p.status === 'approved') {
+                approvedCount++;
+                let amt = parseFloat(p.amount) || 0;
+                revTotal += amt;
+                let t = p.timestamp || 0;
+                if(t >= startOfToday) revToday += amt;
+                if(t >= startOfMonth) revMonth += amt;
+            }
+        });
+        
+        document.getElementById('stat-approved-deposits').innerText = approvedCount;
+        
+        animateCounter('stat-revenue', parseFloat(document.getElementById('stat-revenue').innerText.replace('₹','')) || 0, revTotal, 1000, true);
+        animateCounter('stat-rev-today', parseFloat(document.getElementById('stat-rev-today').innerText.replace('₹','')) || 0, revToday, 1000, true);
+        animateCounter('stat-rev-month', parseFloat(document.getElementById('stat-rev-month').innerText.replace('₹','')) || 0, revMonth, 1000, true);
+
+        renderRecentPayments(deposits.slice(0, 5)); 
+        updateChart(deposits);
+    }
+
+    async function updateChart(allDeposits) {
+        if (!window.Chart) {
+            await new Promise((resolve) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                script.onload = resolve;
+                document.head.appendChild(script);
+            });
+        }
+
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const last7Days = [...Array(7)].map((_, i) => {
+            const d = new Date(); d.setDate(d.getDate() - i); return d.toLocaleDateString();
+        }).reverse();
+
+        const revData = {}; last7Days.forEach(d => revData[d] = 0);
+
+        allDeposits.forEach(p => {
+            if(p.status === 'approved' && p.timestamp) {
+                const d = new Date(p.timestamp).toLocaleDateString();
+                if(revData[d] !== undefined) revData[d] += parseFloat(p.amount);
+            }
+        });
+        const data = Object.values(revData);
+
+        if(revChart) { revChart.data.datasets[0].data = data; revChart.update(); return; }
+
+        Chart.defaults.color = '#888888'; Chart.defaults.font.family = "'Poppins', sans-serif";
+        revChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: last7Days,
+                datasets: [{
+                    label: 'Revenue (₹)', data: data, borderColor: '#bc13fe', backgroundColor: 'rgba(255, 214, 0, 0.1)',
+                    borderWidth: 2, fill: true, tension: 0.4, pointBackgroundColor: '#00f0ff', pointBorderColor: '#111',
+                    pointBorderWidth: 2, pointRadius: 4, pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { backgroundColor: 'rgba(17,17,17,0.9)', titleColor: '#fff', bodyColor: '#00ff66', displayColors: false, callbacks: { label: (ctx) => '₹ ' + ctx.parsed.y } } },
+                scales: { x: { grid: { color: 'rgba(255,255,255,0.05)' } }, y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { callback: (val) => '₹' + val } } }
+            }
+        });
+    }
+
+    function renderRecentPayments(list) {
+        const container = document.getElementById('recent-payments-list'); 
+        if(list.length === 0) { container.innerHTML = '<div style="padding:20px; text-align:center; color:var(--text-muted);">No recent activity</div>'; return; }
+        
+        let html = '';
+        list.forEach(p => {
+            const color = p.status === 'approved' ? 'var(--success)' : (p.status === 'rejected' ? 'var(--danger)' : 'var(--warning)');
+            let icon = '<i class="fas fa-hand-holding-usd" style="color:var(--success);"></i>';
+            if(p.id.startsWith('ORD')) icon = '<i class="fas fa-bolt" style="color:var(--danger);"></i>';
+            if(p.id.startsWith('CRY')) icon = '<i class="fab fa-bitcoin" style="color:var(--neon-crypto);"></i>';
+            
+            html += `
+                <div style="display:flex; align-items:center; gap:15px; padding:12px 15px; border-radius: 12px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); margin-bottom: 10px;">
+                    <div style="width:45px; height:45px; border-radius:12px; background:var(--surface-light); display:flex; justify-content:center; align-items:center; font-size:18px;">${icon}</div>
+                    <div style="flex:1;"><strong style="display:block; font-size:14px;">${p.email || p.uid}</strong><span style="font-size:11px; color:var(--text-muted);">${p.timestamp ? new Date(p.timestamp).toLocaleDateString() : ''} • Ref: ${p.id.substring(0,8)}...</span></div>
+                    <div style="font-weight:800; font-size:15px; color:${color};">₹${p.amount}</div>
+                </div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    // ==========================================
+    // MODULE: ADVANCED RESELLER SYSTEM
+    // ==========================================
+
+    function getRoleBadge(role) {
+        if(role === 'master_reseller') return '<span class="badge badge-master"><i class="fas fa-crown"></i> Master Reseller</span>';
+        if(role === 'reseller') return '<span class="badge badge-reseller"><i class="fas fa-user-tie"></i> Reseller</span>';
+        if(role === 'sub_reseller') return '<span class="badge badge-sub"><i class="fas fa-user-astronaut"></i> Sub Reseller</span>';
+        return '<span class="badge badge-user"><i class="fas fa-user"></i> Regular User</span>';
+    }
+
+    // Standard Users Table
+    async function initUsersTable() {
+        const tbody = document.getElementById('users-tbody'); let html = '';
+        for(let uid in usersDataCache) {
+            const u = usersDataCache[uid];
+            const statusBadge = u.status === 'suspended' ? '<span class="badge badge-suspended">Suspended</span>' : (u.status === 'banned' ? '<span class="badge badge-danger">Banned</span>' : '<span class="badge badge-success">Active</span>');
+            const roleBadge = getRoleBadge(u.role);
+            
+            html += `<tr>
+                <td>${u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '-'}</td>
+                <td><strong>${u.email}</strong><br><span style="font-size:10px; color:var(--text-muted); font-family:monospace;">UID: ${uid}</span></td>
+                <td style="color:var(--success); font-weight:bold; font-size:14px;">₹${parseFloat(u.balance || 0).toFixed(2)}</td>
+                <td>${roleBadge}<br><div style="margin-top:4px;">${statusBadge}</div></td>
+                <td style="display:flex; flex-wrap:wrap; gap:5px; max-width: 250px;">
+                    <button class="btn btn-primary btn-sm" onclick="openBalanceModal('${uid}', ${u.balance || 0})"><i class="fas fa-wallet"></i></button>
+                    <button class="btn btn-info btn-sm" onclick="openRoleModal('${uid}', '${u.role}')"><i class="fas fa-user-tag"></i> Manage Role</button>
+                    <button class="btn btn-${u.status==='banned'?'outline':'warning'} btn-sm" onclick="toggleStatus('${uid}', '${u.status==='banned'?'active':'banned'}')"><i class="fas fa-ban"></i> ${u.status==='banned'?'Unban':'Ban'}</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteUser('${uid}')" title="Delete"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
+        }
+        tbody.innerHTML = html || '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No users found</td></tr>';
+    }
+
+    // Role Specific Tables
+    async function initMasterResellersTable() { renderRoleTable('master-resellers-tbody', 'master_reseller'); }
+    async function initResellersTable() { renderRoleTable('resellers-tbody', 'reseller'); }
+    async function initSubResellersTable() { renderRoleTable('sub-resellers-tbody', 'sub_reseller'); }
+
+    async function renderRoleTable(tbodyId, targetRole) {
+        const tbody = document.getElementById(tbodyId); let html = '';
+        for(let uid in usersDataCache) {
+            const u = usersDataCache[uid];
+            if(u.role !== targetRole) continue;
+
+            const statusBadge = u.status === 'suspended' ? '<span class="badge badge-suspended">Suspended</span>' : (u.status === 'banned' ? '<span class="badge badge-danger">Banned</span>' : '<span class="badge badge-success">Active</span>');
+            
+            // Try fetching specific reseller stats
+            const rDataSnap = await get(ref(db, `analytics/resellerEarnings/${uid}`));
+            const rData = rDataSnap.val() || {};
+            const eBal = rData.totalEarnings || 0;
+            const uCount = rData.totalUsers || 0;
+
+            html += `<tr>
+                <td>${u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '-'}</td>
+                <td><strong>${u.email}</strong><br><span style="font-size:11px; color:var(--text-muted);"><i class="fas fa-users"></i> Linked Users: ${uCount}</span></td>
+                <td><span style="color:var(--success); font-weight:bold;">Bal: ₹${parseFloat(u.balance || 0).toFixed(2)}</span><br><span style="color:var(--warning); font-size:11px;">Earned: ₹${eBal}</span></td>
+                <td>${statusBadge}</td>
+                <td style="display:flex; flex-wrap:wrap; gap:5px; max-width: 250px;">
+                    <button class="btn btn-info btn-sm" onclick="openRoleModal('${uid}', '${u.role}')"><i class="fas fa-user-tag"></i> Edit Role</button>
+                    <button class="btn btn-${u.status==='suspended'?'outline':'warning'} btn-sm" onclick="toggleStatus('${uid}', '${u.status==='suspended'?'active':'suspended'}')"><i class="fas fa-pause-circle"></i> ${u.status==='suspended'?'Activate':'Suspend'}</button>
+                    <button class="btn btn-outline btn-sm" onclick="window.openEditPermissions('${uid}', '${u.email}')"><i class="fas fa-key"></i> Perms</button>
+                </td>
+            </tr>`;
+        }
+        tbody.innerHTML = html || `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No ${targetRole.replace('_',' ')} found</td></tr>`;
+    }
+
+    // Core User Functions
+    window.toggleStatus = async (uid, status) => { 
+        showLoader(); 
+        try { 
+            let updates = { status: status };
+            if (usersDataCache[uid] && usersDataCache[uid].role !== 'user') {
+                updates.resellerStatus = status; // Sync reseller dashboard lock
+            }
+            await update(ref(db, `users/${uid}`), updates); 
+            showToast(`Status updated to ${status}`); 
+            window.loadSection(document.querySelector('.nav-item.active').getAttribute('data-target')); 
+        } catch(e) { 
+            showToast("Error", "error"); 
+            hideLoader(); 
+        } 
+    };
+    
+    window.deleteUser = async (uid) => {
+        if(!confirm("Are you sure you want to completely DELETE this user? This cannot be undone!")) return;
+        showLoader();
+        try {
+            await remove(ref(db, `users/${uid}`));
+            showToast("User successfully deleted");
+            window.loadSection(document.querySelector('.nav-item.active').getAttribute('data-target'));
+        } catch(e) { showToast("Failed to delete user", "error"); hideLoader(); }
+    };
+
+    // 🌟 RESELLER HIERARCHY & ROLE UPGRADE LOGIC 
+    window.openRoleModal = (uid, currentRole) => {
+        document.getElementById('edit-role-uid').value = uid;
+        document.getElementById('edit-role-current').value = currentRole || 'user';
+        document.getElementById('edit-role-new').value = currentRole || 'user';
+        openModal('modal-role');
+    };
+
+    document.getElementById('btn-save-role').onclick = async () => {
+        const uid = document.getElementById('edit-role-uid').value;
+        const currentRole = document.getElementById('edit-role-current').value;
+        const newRole = document.getElementById('edit-role-new').value;
+
+        if(currentRole === newRole) return closeModal('modal-role');
+
+        showLoader();
+        try {
+            // 1. Remove from old tracking node
+            if(currentRole === 'master_reseller') await remove(ref(db, `masterResellers/${uid}`));
+            else if(currentRole === 'reseller') await remove(ref(db, `resellers/${uid}`));
+            else if(currentRole === 'sub_reseller') await remove(ref(db, `subResellers/${uid}`));
+
+            // 2. Prepare comprehensive update for Reseller propagation
+            let userUpdates = { 
+                role: newRole,
+                upgradedBy: 'admin',
+                upgradedAt: new Date().toISOString()
+            };
+            
+            if (newRole !== 'user') {
+                userUpdates.resellerType = newRole;
+                userUpdates.resellerStatus = 'active';
+            } else {
+                userUpdates.resellerType = null;
+                userUpdates.resellerStatus = null;
+            }
+
+            // 3. Update main users node safely
+            await update(ref(db, `users/${uid}`), userUpdates);
+
+            // 4. Add to new tracking node and initialize permissions
+            if(newRole !== 'user') {
+                if(newRole === 'master_reseller') await set(ref(db, `masterResellers/${uid}`), { promotedAt: serverTimestamp() });
+                else if(newRole === 'reseller') await set(ref(db, `resellers/${uid}`), { promotedAt: serverTimestamp() });
+                else if(newRole === 'sub_reseller') await set(ref(db, `subResellers/${uid}`), { promotedAt: serverTimestamp() });
+
+                // Initialize permissions if they don't exist
+                const permSnap = await get(ref(db, `resellerPermissions/${uid}`));
+                if (!permSnap.exists()) {
+                    await set(ref(db, `resellerPermissions/${uid}`), {
+                        canCreateReseller: newRole === 'master_reseller',
+                        canCreateSub: newRole === 'master_reseller' || newRole === 'reseller',
+                        canCreateRef: true,
+                        canManageUsers: true,
+                        canViewEarnings: true,
+                        canWithdraw: true,
+                        maxLimit: 0,
+                        updatedAt: serverTimestamp()
+                    });
+                }
+            }
+
+            // 5. If this user was referred by someone, sync their role in the sponsor's downline
+            const u = usersDataCache[uid];
+            if (u && u.parentResellerUid) {
+                await update(ref(db, `referrals/${u.parentResellerUid}/${uid}`), {
+                    role: newRole,
+                    status: 'active'
+                });
+            }
+
+            showToast(`Role updated to ${newRole.replace('_', ' ').toUpperCase()}`);
+            closeModal('modal-role');
+            window.loadSection(document.querySelector('.nav-item.active').getAttribute('data-target'));
+        } catch(e) { 
+            console.error(e);
+            showToast("Failed to change role", "error"); 
+            hideLoader(); 
+        }
+    };
+
+    // Reseller Permissions
+    async function initPermissionsTable() {
+        const tbody = document.getElementById('permissions-tbody'); let html = '';
+        const permsSnap = await get(ref(db, 'resellerPermissions'));
+        const allPerms = permsSnap.val() || {};
+
+        for(let uid in usersDataCache) {
+            const u = usersDataCache[uid];
+            if(u.role === 'user' || !u.role) continue; // Only resellers
+
+            const p = allPerms[uid] || { canCreateReseller:false, canCreateSub:false, canCreateRef:false, canManageUsers:false, canViewEarnings:true, canWithdraw:true, maxLimit:0 };
+            
+            let activePerms = [];
+            if(p.canCreateReseller) activePerms.push('Create Resellers');
+            if(p.canCreateSub) activePerms.push('Create Subs');
+            if(p.canCreateRef) activePerms.push('Create Ref Codes');
+            if(p.canManageUsers) activePerms.push('Manage Users');
+
+            html += `<tr>
+                <td><strong>${u.email}</strong><br><span style="font-size:10px; color:var(--text-muted); font-family:monospace;">${uid}</span></td>
+                <td>${getRoleBadge(u.role)}</td>
+                <td style="font-size:11px; color:var(--success); max-width:200px;">${activePerms.length > 0 ? activePerms.join(', ') : 'Basic Access Only'}</td>
+                <td style="font-size:12px; color:var(--warning);">${p.maxLimit > 0 ? p.maxLimit : '∞'} Users</td>
+                <td><button class="btn btn-outline btn-sm" onclick="window.openEditPermissions('${uid}', '${u.email}')"><i class="fas fa-edit"></i> Edit Perms</button></td>
+            </tr>`;
+        }
+        tbody.innerHTML = html || '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No resellers found to manage permissions</td></tr>';
+    }
+
+    window.openEditPermissions = async (uid, email) => {
+        document.getElementById('perm-user-email').innerText = email;
+        document.getElementById('perm-uid').value = uid;
+        
+        const pSnap = await get(ref(db, `resellerPermissions/${uid}`));
+        const p = pSnap.val() || {};
+
+        document.getElementById('perm-create-reseller').checked = !!p.canCreateReseller;
+        document.getElementById('perm-create-sub').checked = !!p.canCreateSub;
+        document.getElementById('perm-create-ref').checked = !!p.canCreateRef;
+        document.getElementById('perm-manage-users').checked = !!p.canManageUsers;
+        document.getElementById('perm-view-earnings').checked = p.canViewEarnings !== false; // Default true
+        document.getElementById('perm-withdraw').checked = p.canWithdraw !== false; // Default true
+        document.getElementById('perm-max-limit').value = p.maxLimit || 0;
+
+        openModal('modal-edit-permissions');
+    };
+
+    document.getElementById('btn-save-permissions').onclick = async () => {
+        const uid = document.getElementById('perm-uid').value;
+        const payload = {
+            canCreateReseller: document.getElementById('perm-create-reseller').checked,
+            canCreateSub: document.getElementById('perm-create-sub').checked,
+            canCreateRef: document.getElementById('perm-create-ref').checked,
+            canManageUsers: document.getElementById('perm-manage-users').checked,
+            canViewEarnings: document.getElementById('perm-view-earnings').checked,
+            canWithdraw: document.getElementById('perm-withdraw').checked,
+            maxLimit: parseInt(document.getElementById('perm-max-limit').value) || 0,
+            updatedAt: serverTimestamp()
+        };
+
+        showLoader();
+        try {
+            await set(ref(db, `resellerPermissions/${uid}`), payload);
+            showToast("Permissions updated successfully!");
+            closeModal('modal-edit-permissions');
+            if(document.querySelector('.nav-item.active').getAttribute('data-target') === 'permissions'){
+                window.loadSection('permissions');
+            }
+        } catch(e) { showToast("Failed to save permissions", "error"); hideLoader(); }
+    };
+
+    // Commission Settings
+    async function initCommissions() {
+        const snap = await get(ref(db, 'commissions/global'));
+        const data = snap.val() || {};
+        document.getElementById('comm-master').value = data.master || 25;
+        document.getElementById('comm-reseller').value = data.reseller || 15;
+        document.getElementById('comm-sub').value = data.sub || 10;
+        document.getElementById('comm-extra').value = data.extra || 5;
+        document.getElementById('comm-referral').value = data.referral || 5;
+    }
+
+    document.getElementById('btn-save-commissions').onclick = async () => {
+        showLoader();
+        try {
+            await set(ref(db, 'commissions/global'), {
+                master: parseFloat(document.getElementById('comm-master').value) || 0,
+                reseller: parseFloat(document.getElementById('comm-reseller').value) || 0,
+                sub: parseFloat(document.getElementById('comm-sub').value) || 0,
+                extra: parseFloat(document.getElementById('comm-extra').value) || 0,
+                referral: parseFloat(document.getElementById('comm-referral').value) || 0,
+                updatedAt: serverTimestamp()
+            });
+            showToast("Commission settings updated globally");
+        } catch(e) { showToast("Update failed", "error"); }
+        hideLoader();
+    };
+
+    // Reseller Earnings Dashboard
+    async function initEarningsTable() {
+        const tbody = document.getElementById('earnings-tbody'); let html = '';
+        const earnSnap = await get(ref(db, 'analytics/resellerEarnings'));
+        const earningsData = earnSnap.val() || {};
+
+        let totalSysEarn = 0; let totalSysPaid = 0;
+
+        for(let uid in usersDataCache) {
+            const u = usersDataCache[uid];
+            if(u.role === 'user' || !u.role) continue;
+
+            const e = earningsData[uid] || { totalUsers:0, subResellers:0, totalPurchases:0, todayPurchases:0, totalCommission:0, pendingCommission:0, withdrawn:0 };
+            
+            totalSysEarn += e.totalCommission || 0;
+            totalSysPaid += e.withdrawn || 0;
+
+            html += `<tr>
+                <td><strong>${u.email}</strong><br>${getRoleBadge(u.role)}</td>
+                <td style="font-size:12px; color:var(--text-muted);"><i class="fas fa-users"></i> Direct Users: ${e.totalUsers || 0}<br><i class="fas fa-sitemap"></i> Sub-Resellers: ${e.subResellers || 0}</td>
+                <td style="font-size:13px; font-weight:600;"><span style="color:var(--accent);">Total: ${e.totalPurchases || 0}</span><br><span style="color:var(--accent-secondary);">Today: ${e.todayPurchases || 0}</span></td>
+                <td style="font-size:13px; font-weight:600;"><span style="color:var(--success);">Bal: ₹${(e.totalCommission || 0).toFixed(2)}</span><br><span style="color:var(--warning);">Pending: ₹${(e.pendingCommission || 0).toFixed(2)}</span><br><span style="color:var(--text-muted);">Paid: ₹${(e.withdrawn || 0).toFixed(2)}</span></td>
+                <td><button class="btn btn-outline btn-sm" onclick="showToast('Feature coming soon')"><i class="fas fa-money-bill-wave"></i> Settle Payout</button></td>
+            </tr>`;
+        }
+
+        document.getElementById('earnings-stats-grid').innerHTML = `
+            <div class="stat-card glass"><div class="stat-info"><p>System Global Commissions</p><h3>₹${totalSysEarn.toFixed(2)}</h3></div><div class="stat-icon" style="background:var(--success);"><i class="fas fa-chart-pie"></i></div></div>
+            <div class="stat-card glass"><div class="stat-info"><p>Total Payouts Settled</p><h3>₹${totalSysPaid.toFixed(2)}</h3></div><div class="stat-icon" style="background:var(--warning);"><i class="fas fa-hand-holding-usd"></i></div></div>
+        `;
+
+        tbody.innerHTML = html || '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No earning data found</td></tr>';
+    }
+
+    // Referral Codes
+    async function initReferralCodesTable() {
+        const tbody = document.getElementById('referral-tbody'); let html = '';
+        const refSnap = await get(ref(db, 'referralCodes'));
+        
+        if(refSnap.exists()) {
+            refSnap.forEach(child => {
+                const c = child.val();
+                const limitText = c.maxUses ? `${c.uses || 0} / ${c.maxUses}` : `${c.uses || 0} / ∞`;
+                const creator = c.creator === 'admin' ? '<span style="color:var(--danger);">ADMIN</span>' : `<span style="font-family:monospace; font-size:10px;">${c.creator}</span>`;
+                html += `<tr>
+                    <td><strong style="color:var(--accent); font-family:monospace; font-size:14px; background: rgba(255, 214, 0, 0.1); padding: 4px 8px; border-radius: 4px;">${child.key}</strong></td>
+                    <td>${creator}</td>
+                    <td style="font-weight: bold; color: var(--success);">${c.bonus}% Bonus<br><span style="font-size:11px; color:var(--text-muted); font-weight:normal;">Uses: ${limitText}</span></td>
+                    <td><span class="badge ${c.status ? 'badge-success' : 'badge-danger'}">${c.status ? 'Active' : 'Disabled'}</span></td>
+                    <td style="display:flex; gap:5px;">
+                        <button class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText('${child.key}'); showToast('Code copied');"><i class="fas fa-copy"></i></button>
+                        <button class="btn btn-outline btn-sm" onclick="window.toggleReferral('${child.key}', ${c.status})">${c.status ? '<i class="fas fa-ban"></i>' : '<i class="fas fa-check"></i>'}</button>
+                        <button class="btn btn-danger btn-sm" onclick="window.deleteReferral('${child.key}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`;
+            });
+        }
+        tbody.innerHTML = html || '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No referral codes generated</td></tr>';
+    }
+
+    document.getElementById('btn-add-referral').onclick = async () => {
+        const code = document.getElementById('ref-code-input').value.trim().toUpperCase();
+        const creator = document.getElementById('ref-creator').value.trim();
+        const bonus = parseInt(document.getElementById('ref-bonus').value);
+        const max = document.getElementById('ref-max').value ? parseInt(document.getElementById('ref-max').value) : null;
+
+        if(!code || isNaN(bonus)) return showToast('Code and Bonus required', 'error');
+
+        showLoader();
+        try {
+            const snap = await get(ref(db, `referralCodes/${code}`));
+            if(snap.exists()) { hideLoader(); return showToast('Code already exists', 'error'); }
+            
+            await set(ref(db, `referralCodes/${code}`), { creator, bonus, maxUses: max, uses: 0, status: true, createdAt: serverTimestamp() });
+            showToast('Referral Code Generated!');
+            document.getElementById('ref-code-input').value = '';
+            window.loadSection('referral-codes');
+        } catch(e) { showToast('Generation failed', 'error'); hideLoader(); }
+    };
+
+    window.toggleReferral = async (code, currentStatus) => { showLoader(); await update(ref(db, `referralCodes/${code}`), { status: !currentStatus }); showToast("Status Updated"); window.loadSection('referral-codes'); };
+    window.deleteReferral = async (code) => { if(confirm("Delete this referral code?")) { showLoader(); await remove(ref(db, `referralCodes/${code}`)); showToast("Code deleted"); window.loadSection('referral-codes'); } };
+
+    // Network Tree View
+    async function initNetworkTree() {
+        const container = document.getElementById('network-tree-container');
+
+        let treeMap = { 'admin': [] };
+        
+        for(let uid in usersDataCache) {
+            const u = usersDataCache[uid];
+            // Identify accurate parent via hierarchy mapping.
+            let parentId = u.parentResellerUid || u.sponsorUid || u.createdBy || 'admin';
+            if (parentId === 'self' || parentId === uid || !usersDataCache[parentId]) parentId = 'admin';
+
+            if(!treeMap[parentId]) treeMap[parentId] = [];
+            treeMap[parentId].push({ uid, ...u });
+        }
+
+        const buildNode = (nodeId) => {
+            const children = treeMap[nodeId] || [];
+            if(children.length === 0) return '';
+            let html = '<ul class="tree-children">';
+            children.forEach(c => {
+                const color = c.role === 'master_reseller' ? 'var(--master-color)' : (c.role === 'reseller' ? 'var(--accent-secondary)' : (c.role==='sub_reseller'?'var(--sub-color)':'var(--text-muted)'));
+                html += `<li class="tree-node">
+                            <div class="tree-item">
+                                <div class="tree-avatar" style="color:${color};"><i class="fas ${c.role === 'user' ? 'fa-user' : 'fa-user-tie'}"></i></div>
+                                <div class="tree-info"><span class="tree-name">${c.email}</span><span class="tree-role" style="color:${color};">${c.role ? c.role.replace('_',' ') : 'User'}</span></div>
+                            </div>
+                            ${buildNode(c.uid)}
+                         </li>`;
+            });
+            html += '</ul>';
+            return html;
+        };
+
+        const rootHtml = `<ul class="tree-root">
+            <li class="tree-node">
+                <div class="tree-item" style="border-color:var(--success); background:rgba(0,255,102,0.1);"><div class="tree-avatar" style="color:var(--success);"><i class="fas fa-crown"></i></div><div class="tree-info"><span class="tree-name">SYSTEM ADMIN</span><span class="tree-role">Root Node</span></div></div>
+                ${buildNode('admin')}
+            </li>
+        </ul>`;
+
+        container.innerHTML = rootHtml;
+    }
+
+    window.filterTree = () => {
+        const input = document.getElementById("search-tree-input").value.toUpperCase();
+        const items = document.getElementsByClassName("tree-item");
+        for (let i = 0; i < items.length; i++) {
+            const txtValue = items[i].textContent || items[i].innerText;
+            if (txtValue.toUpperCase().indexOf(input) > -1) {
+                items[i].style.display = "";
+            } else {
+                items[i].style.display = "none";
+            }
+        }
+    };
+
+    // ==========================================
+    // MODULE: PURCHASE PLANS (GLOBAL)
+    // ==========================================
+    async function initPurchasePlansTable() {
+        const tbody = document.getElementById('purchase-plans-tbody'); let html = '';
+        const plansSnap = await get(query(ref(db, 'purchasePlans')));
+        const plans = [];
+        plansSnap.forEach(c => { plans.push({ id: c.key, ...c.val() }); });
+        
+        plans.sort((a,b) => (a.sortOrder || 99) - (b.sortOrder || 99));
+
+        plans.forEach(p => {
+            const statusBadge = p.status === 'active' ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Disabled</span>';
+            html += `<tr>
+                <td style="font-weight:bold; color:var(--text-muted);">${p.sortOrder || 1}</td>
+                <td><strong style="color:var(--accent); font-size:14px;">${p.name}</strong><br><span style="font-size:10px; font-family:monospace; color:var(--text-muted);">ID: ${p.id}</span></td>
+                <td><span style="color:var(--success); font-weight:600;">User: ₹${p.userPrice}</span><br><span style="color:var(--warning); font-size:12px;">Reseller: ₹${p.resellerPrice}</span></td>
+                <td>${statusBadge}</td>
+                <td style="display:flex; gap:5px;">
+                    <button class="btn btn-outline btn-sm" onclick="window.toggleGlobalPlan('${p.id}', '${p.status}')">${p.status === 'active' ? '<i class="fas fa-ban"></i>' : '<i class="fas fa-check"></i>'}</button>
+                    <button class="btn btn-primary btn-sm" onclick="window.openEditGlobalPlan('${p.id}', '${p.name}', ${p.userPrice}, ${p.resellerPrice}, ${p.sortOrder})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="window.deleteGlobalPlan('${p.id}')"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
+        });
+        tbody.innerHTML = html || '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No global plans defined</td></tr>';
+    }
+
+    document.getElementById('btn-add-global-plan').onclick = async () => {
+        const name = document.getElementById('plan-name').value.trim();
+        const userPrice = parseFloat(document.getElementById('plan-user-price').value);
+        const resPrice = parseFloat(document.getElementById('plan-reseller-price').value);
+        const sort = parseInt(document.getElementById('plan-sort').value) || 1;
+
+        if(!name || isNaN(userPrice) || isNaN(resPrice)) return showToast("Valid details required", "error");
+
+        showLoader();
+        try {
+            await push(ref(db, 'purchasePlans'), { name, userPrice, resellerPrice: resPrice, sortOrder: sort, status: 'active', createdAt: serverTimestamp() });
+            showToast("Plan added!");
+            ['plan-name', 'plan-user-price', 'plan-reseller-price'].forEach(id => document.getElementById(id).value = '');
+            window.loadSection('purchase-plans');
+        } catch(e) { showToast("Failed", "error"); hideLoader(); }
+    };
+
+    window.toggleGlobalPlan = async (id, status) => { showLoader(); await update(ref(db, `purchasePlans/${id}`), { status: status === 'active' ? 'disabled' : 'active' }); window.loadSection('purchase-plans'); };
+    window.deleteGlobalPlan = async (id) => { if(confirm("Delete global plan?")) { showLoader(); await remove(ref(db, `purchasePlans/${id}`)); window.loadSection('purchase-plans'); } };
+    
+    window.openEditGlobalPlan = (id, name, uprice, rprice, sort) => {
+        document.getElementById('edit-gplan-id').value = id;
+        document.getElementById('edit-gplan-name').value = name;
+        document.getElementById('edit-gplan-user-price').value = uprice;
+        document.getElementById('edit-gplan-reseller-price').value = rprice;
+        document.getElementById('edit-gplan-sort').value = sort;
+        openModal('modal-edit-plan');
+    };
+
+    document.getElementById('btn-save-gplan').onclick = async () => {
+        const id = document.getElementById('edit-gplan-id').value;
+        const name = document.getElementById('edit-gplan-name').value;
+        const u = parseFloat(document.getElementById('edit-gplan-user-price').value);
+        const r = parseFloat(document.getElementById('edit-gplan-reseller-price').value);
+        const s = parseInt(document.getElementById('edit-gplan-sort').value);
+
+        showLoader();
+        try { await update(ref(db, `purchasePlans/${id}`), { name, userPrice: u, resellerPrice: r, sortOrder: s }); showToast("Plan updated"); closeModal('modal-edit-plan'); window.loadSection('purchase-plans'); } catch(e) { showToast("Error", "error"); hideLoader(); }
+    };
+
+    // ==========================================
+    // MODULE: NOTIFICATION SYSTEM
+    // ==========================================
+    document.getElementById('notif-target').addEventListener('change', function() {
+        if(this.value === 'specific') document.getElementById('group-notif-uid').classList.remove('hidden');
+        else document.getElementById('group-notif-uid').classList.add('hidden');
+    });
+
+    async function initNotifications() {
+        const tbody = document.getElementById('notif-history-tbody'); let html = '';
+        const snap = await get(query(ref(db, 'analytics/notificationsLog'), limitToLast(20)));
+        const logs = [];
+        snap.forEach(c => logs.push(c.val()));
+        logs.reverse().forEach(l => {
+            const prioColor = l.priority === 'urgent' ? 'var(--danger)' : (l.priority === 'high' ? 'var(--warning)' : 'var(--success)');
+            html += `<tr>
+                <td style="font-size:12px; color:var(--text-muted);">${new Date(l.timestamp).toLocaleString()}</td>
+                <td><span class="badge" style="border:1px solid ${prioColor}; color:${prioColor}; margin-right:5px;">${l.priority.toUpperCase()}</span> <span class="badge badge-user">${l.target.toUpperCase()}</span></td>
+                <td><strong>${l.title}</strong></td>
+            </tr>`;
+        });
+        tbody.innerHTML = html || '<tr><td colspan="3" style="text-align:center; color:var(--text-muted);">No recent dispatch logs</td></tr>';
+    }
+
+    document.getElementById('btn-send-notif').onclick = async () => {
+        const title = document.getElementById('notif-title').value.trim();
+        const msg = document.getElementById('notif-message').value.trim();
+        const priority = document.getElementById('notif-priority').value;
+        const target = document.getElementById('notif-target').value;
+        const uid = document.getElementById('notif-uid').value.trim();
+
+        if(!title || !msg) return showToast("Title and message required", "error");
+        if(target === 'specific' && !uid) return showToast("UID required for specific target", "error");
+
+        showLoader();
+        try {
+            const payload = { title, message: msg, priority, target, targetUid: target === 'specific' ? uid : null, timestamp: Date.now() };
+            // Simulate dispatch by saving to a global notifications node for clients to read
+            await push(ref(db, 'globalNotifications'), payload);
+            // Save log
+            await push(ref(db, 'analytics/notificationsLog'), payload);
+            
+            showToast("Push notification dispatched!");
+            document.getElementById('notif-title').value = ''; document.getElementById('notif-message').value = '';
+            window.loadSection('notifications');
+        } catch(e) { showToast("Failed to dispatch", "error"); hideLoader(); }
+    };
+
+    // ==========================================
+    // MODULE: CORE EXISTING SYSTEMS
+    // ==========================================
+
+    // Panels System (Add/Edit/Delete/Stock)
+    window.updateLivePreview = () => {
+        const name = document.getElementById('add-p-name').value || 'Panel Name';
+        const logo = document.getElementById('add-p-logo').value || '';
+        const category = document.getElementById('add-p-category').value || 'Category';
+        const descText = document.getElementById('add-p-desc').value || 'Premium injection tool';
+        const mediaType = document.getElementById('add-p-media-type').value;
+        let mediaHtml = '';
+        if (mediaType === 'video') {
+            const ytId = extractYTId(document.getElementById('add-p-yt').value) || 'dQw4w9WgXcQ';
+            mediaHtml = `<div class="iframe-container"><iframe src="https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1" allowfullscreen></iframe></div>`;
+        } else {
+            const imgUrl = document.getElementById('add-p-image').value || 'https://via.placeholder.com/600x337/1a1a1a/bc13fe?text=Image+Preview';
+            mediaHtml = `<div class="iframe-container"><img src="${imgUrl}" alt="Preview"></div>`;
+        }
+        let featuresArr = descText.split(/\n|-/).filter(f => f.trim().length > 0);
+        let featuresHtml = featuresArr.map(f => `<span class="feature-chip"><i class="fas fa-bolt"></i> ${f.trim()}</span>`).join('');
+        let planHtml = '';
+        document.querySelectorAll('.plan-row').forEach(row => {
+            const lbl = row.querySelector('.p-label').value || 'Plan Name'; const p = row.querySelector('.p-price').value || '0'; const rp = row.querySelector('.p-reseller-price').value || '0';
+            if(lbl && p) planHtml += `<option>${lbl} - ₹${p} (Reseller: ₹${rp})</option>`;
+        });
+        if(planHtml) planHtml = `<select class="plan-select" style="width:100%; padding:8px; background:rgba(0,0,0,0.2); color:var(--text-main); border:1px solid var(--border); border-radius:8px;">${planHtml}</select>`;
+        let logoHtml = logo ? `<img src="${logo}" style="width:40px; height:40px; border-radius:8px; object-fit:cover; margin-right:10px;">` : '';
+        document.getElementById('live-preview-card').innerHTML = `${mediaHtml}<div class="panel-info"><div style="display:flex; align-items:center; margin-bottom:15px;">${logoHtml}<div style="flex:1;"><div class="panel-title" style="margin-bottom:0; font-weight:bold;">${name}</div><span style="font-size:11px; color:var(--accent); text-transform:uppercase; font-weight:600;">${category}</span></div><span class="badge badge-active">Live</span></div><div class="features-list" style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">${featuresHtml}</div><div style="margin: 10px 0 15px;">${planHtml || '<span style="color:var(--danger); font-size:11px;">No plans</span>'}</div><button class="btn btn-primary btn-block" style="margin-top:auto;" disabled><i class="fas fa-shopping-cart"></i> PURCHASE KEY</button></div>`;
+    };
+
+    ['add-p-name', 'add-p-logo', 'add-p-category', 'add-p-yt', 'add-p-image', 'add-p-desc'].forEach(id => document.getElementById(id).addEventListener('input', updateLivePreview));
+    document.getElementById('plans-container').addEventListener('input', (e) => { if(e.target.tagName === 'INPUT') updateLivePreview(); });
+    updateLivePreview();
+
+
+    document.getElementById('add-p-delivery-mode')?.addEventListener('change', function(){
+        document.getElementById('auto-api-fields')?.classList.toggle('hidden', this.value !== 'auto');
+    });
+
+    // Load Payment Methods settings into the dedicated admin section.
+    async function loadPaymentMethodSettings(){
+        try{
+            const snap = await get(ref(db, 'settings/payment'));
+            const pay = snap.val() || {};
+            const provider = document.getElementById('pay-provider');
+            if(provider) provider.value = ['zapupi','getpay','custom'].includes(String(pay.provider||'')) ? pay.provider : 'getpay';
+            const el = id => document.getElementById(id);
+            if(el('pay-checkout-url')) el('pay-checkout-url').value = pay.checkout_url || '';
+            if(el('pay-webhook-url')) el('pay-webhook-url').value = pay.webhook_url || '';
+            if(el('pay-auto-enabled')) el('pay-auto-enabled').checked = pay.auto_enabled === true;
+            if(el('pay-upi-id')) el('pay-upi-id').value = pay.upiId || '';
+            if(el('pay-qr-url')) el('pay-qr-url').value = pay.qrImage || '';
+            if(el('pay-manual-enabled')) el('pay-manual-enabled').checked = pay.manual_upi_enabled !== false;
+        }catch(e){}
+    }
+    loadPaymentMethodSettings();
+
+    document.getElementById('btn-save-payment-methods')?.addEventListener('click', async () => {
+        showLoader();
+        try {
+            await set(ref(db, 'settings/payment'), {
+                provider: document.getElementById('pay-provider').value,
+                checkout_url: document.getElementById('pay-checkout-url').value.trim(),
+                webhook_url: document.getElementById('pay-webhook-url').value.trim(),
+                auto_enabled: document.getElementById('pay-auto-enabled').checked,
+                upiId: document.getElementById('pay-upi-id').value.trim(),
+                qrImage: document.getElementById('pay-qr-url').value.trim(),
+                manual_upi_enabled: document.getElementById('pay-manual-enabled').checked,
+                // Secret/API credentials must be configured on payment_proxy.php server-side.
+                api_configured: true
+            });
+            showToast('Payment settings saved!');
+        } catch(e) { showToast('Failed to save payment settings', 'error'); }
+        hideLoader();
+    });
+
+    document.getElementById('btn-add-plan-row').onclick = () => {
+        const container = document.getElementById('plans-container'); const row = document.createElement('div'); row.className = 'plan-row';
+        row.innerHTML = `<div style="display: flex; gap: 10px; margin-bottom: 10px;"><input class="p-label form-input" placeholder="Plan (e.g. 1 Day)" required type="text" style="flex:2;"/><input class="p-price form-input" placeholder="User Price (₹)" required type="number"/><input class="p-reseller-price form-input" placeholder="Reseller Price (₹)" required type="number"/><button class="btn btn-danger btn-sm" onclick="this.parentElement.remove(); window.updateLivePreview();"><i class="fas fa-trash"></i></button></div>`;
+        container.appendChild(row);
+    };
+
+    document.getElementById('btn-submit-panel').onclick = async () => {
+        const name = document.getElementById('add-p-name').value.trim();
+        const logo = document.getElementById('add-p-logo').value.trim();
+        const category = document.getElementById('add-p-category').value.trim();
+        const link = document.getElementById('add-p-link').value.trim();
+        const feedback = document.getElementById('add-p-feedback').value.trim();
+        const desc = document.getElementById('add-p-desc').value.trim();
+        const panelType = document.getElementById('add-p-type').value;
+        const selectedDeliveryMode = document.getElementById('add-p-delivery-mode').value;
+        const pid = document.getElementById('add-p-pid').value.trim();
+        const apiDuration = document.getElementById('add-p-duration').value.trim();
+        const androidRequired = document.getElementById('add-p-android-required').checked;
+        // User-requested rule: PID present = automatic key; PID blank = normal/manual stock.
+        const deliveryMode = (selectedDeliveryMode === 'manual' || !pid) ? 'manual' : 'auto';
+
+        if(!name) return showToast("Panel name is required", "error");
+        const mediaType = document.getElementById('add-p-media-type').value;
+        let mediaUrl = '', youtubeFallback = '';
+        if(mediaType === 'video') {
+            const ytLink = document.getElementById('add-p-yt').value.trim();
+            if(!ytLink) return showToast("YouTube Link required", "error");
+            const ytId = extractYTId(ytLink);
+            if(!ytId) return showToast("Invalid YouTube", "error");
+            mediaUrl = ytId; youtubeFallback = ytId;
+        } else {
+            const imgLink = document.getElementById('add-p-image').value.trim();
+            if(!imgLink) return showToast("Image URL required", "error");
+            mediaUrl = imgLink;
+        }
+
+
+        const plansData = {};
+        let hasValidPlan = false;
+        document.querySelectorAll('.plan-row').forEach((row, index) => {
+            const lbl = row.querySelector('.p-label').value.trim();
+            const p = parseFloat(row.querySelector('.p-price').value);
+            const rp = parseFloat(row.querySelector('.p-reseller-price').value);
+            if(lbl && p >= 0) {
+                const planKey = 'plan_' + index;
+                plansData[planKey] = {
+                    plan_key: planKey,
+                    label: lbl,
+                    price: p,
+                    reseller_price: isNaN(rp) ? p : rp,
+                    delivery_mode: deliveryMode,
+                    pid: pid,
+                    api_duration: apiDuration || lbl,
+                    android_required: androidRequired
+                };
+                hasValidPlan = true;
+            }
+        });
+        if(!hasValidPlan) return showToast("Add at least one plan", "error");
+
+        showLoader();
+        try {
+            await push(ref(db, 'panels'), {
+                name, logo, category, panel_type: panelType,
+                mediaType, mediaUrl, youtube: youtubeFallback, link, feedback,
+                description: desc, status: "active",
+                delivery_mode: deliveryMode, api_pid: pid,
+                api_duration: apiDuration, android_required: androidRequired,
+                plans: plansData
+            });
+            showToast("Panel added successfully!");
+            ['add-p-name','add-p-logo','add-p-category','add-p-yt','add-p-image','add-p-link','add-p-feedback','add-p-desc','add-p-pid','add-p-duration'].forEach(id => document.getElementById(id).value='');
+            document.getElementById('add-p-delivery-mode').value='manual';
+            document.getElementById('add-p-type').value='';
+            document.getElementById('add-p-android-required').checked=false;
+            document.getElementById('auto-api-fields').classList.add('hidden');
+            document.querySelector('.nav-item[data-target="manage-panels"]').click();
+        } catch(e) { showToast("Database Error: "+(e.message||e), "error"); }
+        hideLoader();
+    };
+
+    async function initPanelsTable() {
+        const snap = await get(ref(db, 'panels'));
+        panelsDataCache = snap.val() || {};
+        const container = document.getElementById('admin-panels-container'); let html = '';
+        for(let key in panelsDataCache) {
+            const p = panelsDataCache[key]; const isActive = p.status === 'active';
+            let planHtml = '';
+            if(p.plans && Object.keys(p.plans).length > 0) {
+                const sortedPlans = Object.entries(p.plans).sort((a,b) => (a[1]?.price||0) - (b[1]?.price||0));
+                planHtml = `<select class="plan-select" style="width:100%; padding:8px; background:rgba(0,0,0,0.2); color:var(--text-main); border:1px solid var(--border); border-radius:8px;">`;
+                sortedPlans.forEach(([planKey, planData]) => {
+                    let labelText = planData.label || `${planData.days} Days`;
+                    let rPriceText = planData.resellerPrice !== undefined ? `| Reseller: ₹${planData.resellerPrice}` : '';
+                    planHtml += `<option>${labelText} - ₹${planData.price} ${rPriceText}</option>`;
+                });
+                planHtml += `</select>`;
+            } else { planHtml = `<p style="color:var(--danger); font-size:13px; text-align:center; margin-top:auto; margin-bottom:15px; font-weight:600;">Pricing unavailable.</p>`; }
+
+            let logoHtml = p.logo ? `<img src="${p.logo}" style="width:40px; height:40px; border-radius:8px; object-fit:cover; margin-right:10px;">` : '';
+            let mType = p.mediaType || (p.youtube ? 'video' : 'none'); let mUrl = p.mediaUrl || p.youtube || '';
+            let mediaHtml = '';
+            if (mType === 'video' && mUrl) mediaHtml = `<div class="iframe-container"><iframe src="https://www.youtube.com/embed/${mUrl}?rel=0&modestbranding=1" allowfullscreen></iframe></div>`;
+            else if (mType === 'image' && mUrl) mediaHtml = `<div class="iframe-container"><img src="${mUrl}" alt="Panel Media"></div>`;
+            else mediaHtml = `<div class="iframe-container" style="background:#111; display:flex; align-items:center; justify-content:center; color:#555;">No Media</div>`;
+
+            html += `
+                <div class="panel-card glass">
+                    ${mediaHtml}
+                    <div class="panel-info">
+                        <div style="display:flex; align-items:center; margin-bottom:15px;">
+                            ${logoHtml}
+                            <div style="flex:1;"><div class="panel-title" style="margin-bottom:0; font-weight:bold;">${p.name}</div><span style="font-size:11px; color:var(--accent); text-transform:uppercase; font-weight:600;">${p.category || 'Category'}</span></div>
+                            <span class="badge ${isActive ? 'badge-success' : 'badge-danger'}">${p.status}</span>
+                        </div>
+                        <div style="margin: 15px 0;">${planHtml}</div>
+                        <button class="btn btn-warning btn-block" style="margin-bottom:10px;" onclick="window.openStockModal('${key}')"><i class="fas fa-key"></i> MANAGE STOCK</button>
+                        <div style="display:flex; gap:10px; margin-top:auto; padding-top:15px; border-top:1px solid var(--border);">
+                            <button class="btn btn-outline btn-sm" style="flex:1" onclick="togglePanelStatus('${key}', '${p.status}')"><i class="fas ${isActive ? 'fa-eye-slash' : 'fa-eye'}"></i> ${isActive ? 'Disable' : 'Enable'}</button>
+                            <button class="btn btn-primary btn-sm" onclick="openEditPanel('${key}')" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="deletePanel('${key}')" title="Delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>`;
+        }
+        container.innerHTML = html || '<div style="padding:20px; text-align:center; color:var(--text-muted); width:100%;">No panels found.</div>';
+    }
+
+    window.togglePanelStatus = async (id, currentStatus) => { showLoader(); await update(ref(db, `panels/${id}`), { status: currentStatus === 'active' ? 'inactive' : 'active' }); window.loadSection('manage-panels'); };
+    window.deletePanel = async (id) => { if(confirm("Delete panel?")) { showLoader(); await remove(ref(db, `panels/${id}`)); showToast("Deleted"); window.loadSection('manage-panels'); } };
+    
+    // Key Stock UI
+    window.openStockModal = (panelId) => {
+        document.getElementById('stock-panel-id').value = panelId;
+        const p = panelsDataCache[panelId]; if(!p || !p.plans) return showToast("No plans available", "error");
+        const planSelect = document.getElementById('stock-plan-select'); planSelect.innerHTML = '';
+        Object.entries(p.plans).forEach(([planKey, planData]) => { planSelect.innerHTML += `<option value="${planKey}">${planData.label || 'Plan'}</option>`; });
+        openModal('modal-stock'); window.loadSelectedPlanStock();
+    };
+
+    window.loadSelectedPlanStock = async () => {
+        const panelId = document.getElementById('stock-panel-id').value; const planId = document.getElementById('stock-plan-select').value;
+        const tbody = document.getElementById('stock-keys-tbody'); tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+        try {
+            const snap = await get(ref(db, `keyStocks/${panelId}/${planId}`)); let html = ''; let avail = 0; let used = 0;
+            if(snap.exists()){
+                Object.entries(snap.val()).forEach(([pushId, data]) => {
+                    if(data.used) used++; else avail++;
+                    const usedByEmail = data.usedBy ? (usersDataCache[data.usedBy] ? usersDataCache[data.usedBy].email : data.usedBy) : '-';
+                    const statusBadge = data.used ? `<span class="badge badge-danger">Used</span>` : `<span class="badge badge-success">Available</span>`;
+                    const actionBtn = data.used ? `-` : `<button class="btn btn-danger btn-sm" onclick="window.deleteStockKey('${panelId}','${planId}','${pushId}')"><i class="fas fa-trash"></i></button>`;
+                    html += `<tr><td style="font-family:monospace; color:var(--accent); font-weight:bold;">${data.key}</td><td>${statusBadge}</td><td style="font-size:11px;">${usedByEmail}</td><td>${actionBtn}</td></tr>`;
+                });
+            }
+            document.getElementById('stock-available-count').innerText = avail; document.getElementById('stock-used-count').innerText = used;
+            tbody.innerHTML = html || '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">No stock available.</td></tr>';
+        } catch(e) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--danger);">Error loading stock</td></tr>'; }
+    };
+
+    window.uploadStockKeys = async () => {
+        const panelId = document.getElementById('stock-panel-id').value; const planId = document.getElementById('stock-plan-select').value;
+        const keysArray = document.getElementById('stock-keys-input').value.split('\n').map(k => k.trim()).filter(k => k.length > 0);
+        if(keysArray.length === 0) return showToast('Please enter valid keys', 'error');
+        showLoader(); try {
+            const updates = {}; keysArray.forEach(key => { const pushKey = push(ref(db)).key; updates[`keyStocks/${panelId}/${planId}/${pushKey}`] = { key: key, used: false, addedAt: serverTimestamp() }; });
+            await update(ref(db), updates); showToast(`Added ${keysArray.length} keys!`); document.getElementById('stock-keys-input').value = ''; window.loadSelectedPlanStock();
+        } catch(e) { showToast('Failed', 'error'); } hideLoader();
+    };
+
+    window.deleteStockKey = async (panelId, planId, pushId) => { if(!confirm("Delete key?")) return; showLoader(); await remove(ref(db, `keyStocks/${panelId}/${planId}/${pushId}`)); window.loadSelectedPlanStock(); hideLoader(); };
+
+    // Edit Panel Modal UI
+    window.openEditPanel = (id) => {
+        const p = panelsDataCache[id]; if (!p) return; document.getElementById('edit-p-id').value = id; 
+        document.getElementById('edit-p-name').value = p.name || ''; document.getElementById('edit-p-logo').value = p.logo || ''; document.getElementById('edit-p-category').value = p.category || '';
+        const mType = p.mediaType || (p.youtube ? 'video' : 'video'); document.getElementById('edit-p-media-type').value = mType;
+        if (mType === 'video') { document.getElementById('group-edit-p-yt').classList.remove('hidden'); document.getElementById('group-edit-p-image').classList.add('hidden'); document.getElementById('edit-p-yt').value = (p.mediaUrl || p.youtube) ? `https://youtube.com/watch?v=${p.mediaUrl || p.youtube}` : ''; document.getElementById('edit-p-image').value = ''; } 
+        else { document.getElementById('group-edit-p-yt').classList.add('hidden'); document.getElementById('group-edit-p-image').classList.remove('hidden'); document.getElementById('edit-p-yt').value = ''; document.getElementById('edit-p-image').value = p.mediaUrl || ''; }
+        document.getElementById('edit-p-link').value = p.link || ''; document.getElementById('edit-p-feedback').value = p.feedback || ''; document.getElementById('edit-p-desc').value = p.description || ''; 
+        const plansContainer = document.getElementById('edit-plans-container'); let html = '';
+        if(p.plans) { Object.values(p.plans).forEach(plan => { html += `<div class="edit-plan-row" style="display: flex; gap: 10px; margin-bottom: 10px;"><input class="p-label form-input" placeholder="Plan Name" value="${plan.label || ''}" type="text" style="flex:2;"/><input class="p-price form-input" placeholder="User Price" value="${plan.price || ''}" type="number"/><input class="p-reseller-price form-input" placeholder="Reseller Price" value="${plan.resellerPrice !== undefined ? plan.resellerPrice : plan.price}" type="number"/><button class="btn btn-danger btn-sm" onclick="this.parentElement.remove();"><i class="fas fa-trash"></i></button></div>`; }); }
+        plansContainer.innerHTML = html; openModal('modal-edit-panel');
+    };
+    window.addEditPlanRow = () => { const container = document.getElementById('edit-plans-container'); const row = document.createElement('div'); row.className = 'edit-plan-row'; row.innerHTML = `<div style="display: flex; gap: 10px; margin-bottom: 10px;"><input class="p-label form-input" placeholder="Plan Name" type="text" style="flex:2;"/><input class="p-price form-input" placeholder="Price" type="number"/><input class="p-reseller-price form-input" placeholder="R.Price" type="number"/><button class="btn btn-danger btn-sm" onclick="this.parentElement.remove();"><i class="fas fa-trash"></i></button></div>`; container.appendChild(row); };
+    document.getElementById('btn-save-edit-panel').onclick = async () => {
+        const id = document.getElementById('edit-p-id').value; const mType = document.getElementById('edit-p-media-type').value; let mUrl = ''; let yFallback = '';
+        if(mType === 'video') { const y = extractYTId(document.getElementById('edit-p-yt').value); if(!y) return showToast("Invalid YouTube", "error"); mUrl = y; yFallback = y; } else { mUrl = document.getElementById('edit-p-image').value; }
+        const plansData = {}; let valid = false; document.querySelectorAll('.edit-plan-row').forEach((row, index) => { const lbl = row.querySelector('.p-label').value; const p = parseFloat(row.querySelector('.p-price').value); const rp = parseFloat(row.querySelector('.p-reseller-price').value); if(lbl && p >= 0) { plansData[`plan_${index}`] = { label: lbl, price: p, resellerPrice: isNaN(rp) ? p : rp }; valid = true; } });
+        if(!valid) return showToast("Add a plan", "error");
+        showLoader(); try { await update(ref(db, `panels/${id}`), { name: document.getElementById('edit-p-name').value, logo: document.getElementById('edit-p-logo').value, category: document.getElementById('edit-p-category').value, mediaType: mType, mediaUrl: mUrl, youtube: yFallback, link: document.getElementById('edit-p-link').value, feedback: document.getElementById('edit-p-feedback').value, description: document.getElementById('edit-p-desc').value, plans: plansData }); showToast("Updated!"); closeModal('modal-edit-panel'); window.loadSection('manage-panels'); } catch (e) { showToast("Failed", "error"); hideLoader(); } 
+    };
+
+    // Deposits Subsystem
+    async function initGatewayTable() {
+        const snap = await get(query(ref(db, 'gateway_payments'), limitToLast(500)));
+        const list = []; snap.forEach(child => list.push({ id: child.key, ...child.val() })); list.sort((a,b) => (b.timestamp || b.date || 0) - (a.timestamp || a.date || 0));
+        const tbody = document.getElementById('gateway-tbody'); let html = '';
+        list.forEach(p => {
+            const email = p.email || (usersDataCache[p.uid] ? usersDataCache[p.uid].email : p.uid);
+            let actions = p.status === 'pending' ? `<button class="btn btn-success btn-sm" style="background:var(--success); color:#000;" onclick="handleGatewayAction('${p.id}', '${p.uid}', ${p.amount}, 'approved', this)"><i class="fas fa-check-circle"></i> Accept</button><button class="btn btn-danger btn-sm" onclick="handleGatewayAction('${p.id}', '${p.uid}', 0, 'rejected', this)"><i class="fas fa-times"></i> Reject</button>` : `<span style="font-size:12px; color:var(--text-muted);"><i class="fas fa-check-double"></i> Processed</span>`;
+            html += `<tr><td>${p.timestamp ? new Date(p.timestamp).toLocaleString() : 'N/A'}</td><td><strong>${email}</strong><br><span style="font-size:11px; color:var(--accent);">${p.phone || 'No Phone'}</span></td><td style="color:var(--success); font-weight:600;">₹${p.amount}</td><td style="font-family:monospace; background:rgba(0,0,0,0.2); padding:4px 8px; border-radius:6px;">${p.id.startsWith('ORD') ? p.id : (p.utr || p.id)}</td><td><span class="badge badge-${p.status}">${p.status}</span></td><td style="display:flex; gap:5px;">${actions}</td></tr>`;
+        });
+        tbody.innerHTML = html || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No records found</td></tr>';
+    }
+
+    async function initManualTable() {
+        const snap = await get(query(ref(db, 'deposits'), limitToLast(500)));
+        const list = []; snap.forEach(child => list.push({ id: child.key, ...child.val() })); list.sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0));
+        const tbody = document.getElementById('manual-tbody'); let html = '';
+        list.forEach(d => {
+            const email = d.email || (usersDataCache[d.uid] ? usersDataCache[d.uid].email : d.uid);
+            let actions = d.status === 'pending' ? `<button class="btn btn-success btn-sm" style="background:var(--success); color:#000;" onclick="handleStandardAction('deposits', '${d.id}', '${d.uid}', ${d.amount}, 'approved', this)"><i class="fas fa-check"></i> Accept</button><button class="btn btn-danger btn-sm" onclick="handleStandardAction('deposits', '${d.id}', '${d.uid}', 0, 'rejected', this)"><i class="fas fa-times"></i> Reject</button>` : `<span style="font-size:12px; color:var(--text-muted);"><i class="fas fa-check-double"></i> Processed</span>`;
+            const imgBtn = d.screenshot ? `<button class="btn btn-outline btn-sm" onclick="openImageModal('${d.screenshot}')"><i class="fas fa-image"></i></button>` : '';
+            html += `<tr><td>${(d.timestamp || d.date) ? new Date(d.timestamp || d.date).toLocaleString() : 'N/A'}</td><td><strong>${email}</strong></td><td style="color:var(--success); font-weight:600;">₹${d.amount}</td><td><span style="font-size:11px; color:var(--accent);">${d.app || 'Unknown'}</span><br><span style="font-family:monospace; background:rgba(0,0,0,0.2); padding:2px 6px; border-radius:4px;">${d.utr}</span></td><td><span class="badge badge-${d.status}">${d.status}</span></td><td style="display:flex; gap:5px;">${imgBtn} ${actions}</td></tr>`;
+        });
+        tbody.innerHTML = html || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No records found</td></tr>';
+    }
+
+    async function initCryptoTable() {
+        const snap = await get(query(ref(db, 'crypto_deposits'), limitToLast(500)));
+        const list = []; snap.forEach(child => list.push({ id: child.key, ...child.val() })); list.sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0));
+        const tbody = document.getElementById('crypto-tbody'); let html = '';
+        list.forEach(d => {
+            const email = d.email || (usersDataCache[d.uid] ? usersDataCache[d.uid].email : d.uid);
+            let actions = d.status === 'pending' ? `<button class="btn btn-success btn-sm" style="background:var(--success); color:#000;" onclick="handleStandardAction('crypto_deposits', '${d.id}', '${d.uid}', ${d.amount}, 'approved', this)"><i class="fas fa-check"></i> Accept</button><button class="btn btn-danger btn-sm" onclick="handleStandardAction('crypto_deposits', '${d.id}', '${d.uid}', 0, 'rejected', this)"><i class="fas fa-times"></i> Reject</button>` : `<span style="font-size:12px; color:var(--text-muted);"><i class="fas fa-check-double"></i> Processed</span>`;
+            const imgBtn = d.screenshot ? `<button class="btn btn-outline btn-sm" onclick="openImageModal('${d.screenshot}')"><i class="fas fa-image"></i></button>` : '';
+            html += `<tr><td>${(d.timestamp || d.date) ? new Date(d.timestamp || d.date).toLocaleString() : 'N/A'}</td><td><strong>${email}</strong></td><td style="color:var(--neon-crypto); font-weight:600;">₹${d.amount}</td><td><span style="font-family:monospace; background:rgba(0,0,0,0.2); padding:2px 6px; border-radius:4px; color:var(--neon-crypto);">${d.hash}</span><br><span style="font-size:11px; color:var(--text-muted);">${d.note || 'No Note'}</span></td><td><span class="badge badge-${d.status}">${d.status}</span></td><td style="display:flex; gap:5px;">${imgBtn} ${actions}</td></tr>`;
+        });
+        tbody.innerHTML = html || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No records found</td></tr>';
+    }
+
+    window.handleGatewayAction = async (payId, uid, amount, action, btn) => {
+        if(!confirm(`Confirm ${action.toUpperCase()}?`)) return;
+        const originalText = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; showLoader();
+        try { 
+            if (action === 'approved') {
+                if (window.ZAP_KEY && payId.startsWith('ORD')) {
+                    ZapUPI.orderStatus({ zap_key: window.ZAP_KEY, order_id: payId }, { onResponse: async function(orderId, data) { if (data && data.data && data.data.status === "Success") { await approvePaymentNode('gateway_payments', payId, uid, amount, data.data.txn_id, data.data.utr); } else { showToast(`Payment not successful on gateway`, "error"); hideLoader(); btn.disabled = false; btn.innerHTML = originalText; } }, onError: function(err) { showToast("Gateway verification failed", "error"); hideLoader(); btn.disabled = false; btn.innerHTML = originalText; } });
+                    return; 
+                } else { if(confirm("ZapUPI Key missing. Force manual approval?")) { await approvePaymentNode('gateway_payments', payId, uid, amount, "MANUAL", "MANUAL"); } else { hideLoader(); btn.disabled = false; btn.innerHTML = originalText; } }
+            } else if (action === 'rejected') { await update(ref(db, `gateway_payments/${payId}`), { status: 'rejected' }); await update(ref(db, `transactions/${uid}/${payId}`), { status: 'failed' }); showToast("Rejected!"); window.loadSection('gateway'); hideLoader(); }
+        } catch (e) { showToast("Action failed", "error"); hideLoader(); btn.disabled = false; btn.innerHTML = originalText; } 
+    };
+
+    window.handleStandardAction = async (node, txId, uid, amount, action, btn) => {
+        if(!confirm(`Confirm ${action.toUpperCase()}?`)) return;
+        const originalText = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; showLoader();
+        try { 
+            if (action === 'approved') { await approvePaymentNode(node, txId, uid, amount, "N/A", "N/A"); } 
+            else if (action === 'rejected') { await update(ref(db, `${node}/${txId}`), { status: 'rejected' }); await update(ref(db, `transactions/${txId}`), { status: 'failed' }); showToast("Rejected!"); window.loadSection(node.includes('manual') || node==='deposits' ? 'manual' : 'crypto'); hideLoader(); }
+        } catch (e) { showToast("Action failed", "error"); hideLoader(); btn.disabled = false; btn.innerHTML = originalText; } 
+    };
+
+    async function approvePaymentNode(node, txId, uid, amount, txnId, utr) {
+        try {
+            const result = await runTransaction(ref(db, `${node}/${txId}`), (data) => { if (data && data.status === 'pending') { data.status = 'approved'; if(txnId!=="N/A") { data.txn_id = txnId; data.verified_utr = utr; } return data; } return undefined; });
+            if (result.committed) {
+                await runTransaction(ref(db, `users/${uid}/balance`), (bal) => (bal || 0) + parseFloat(amount));
+                let upObj = { status: 'success' }; if(txnId!=="N/A") { upObj.txn_id = txnId; upObj.utr = utr; }
+                await update(ref(db, `transactions/${txId}`), upObj);
+                showToast("Deposit approved!"); if(node==='gateway_payments') window.loadSection('gateway'); else if(node==='deposits' || node==='manual_deposits') window.loadSection('manual'); else window.loadSection('crypto');
+            } else { showToast("Already processed.", "error"); }
+        } catch(e) { showToast("Failed to update", "error"); } hideLoader();
+    }
+
+    // Purchase History & Refunds
+    async function initPurchasesTable() {
+        const snap = await get(query(ref(db, 'purchases'), limitToLast(500)));
+        const allPurchases = snap.val() || {}; let list = [];
+        for(let uid in allPurchases) { 
+            let userData = allPurchases[uid];
+            if (userData.panelId || userData.plan) { let item = userData; item.uid = uid; item.pushId = uid; list.push(item); } 
+            else { for(let pushId in userData) { let item = userData[pushId]; if(typeof item === 'object') { item.uid = uid; item.pushId = pushId; list.push(item); } } }
+        }
+        list.sort((a,b) => new Date(b.date) - new Date(a.date)); 
+        const tbody = document.getElementById('purchases-tbody'); let html = '';
+        list.forEach(p => {
+            const email = usersDataCache[p.uid] ? usersDataCache[p.uid].email : p.uid; 
+            const roleBadge = usersDataCache[p.uid] ? getRoleBadge(usersDataCache[p.uid].role) : '';
+            const panelName = p.panelName || (panelsDataCache[p.panelId] ? panelsDataCache[p.panelId].name : 'Global / Unknown');
+            const isRefunded = p.status === 'refunded';
+            const actionBtn = isRefunded ? `<span class="badge badge-danger">Refunded</span>` : `<button class="btn btn-outline btn-sm" style="border-color:var(--danger); color:var(--danger);" onclick="window.refundPurchase('${p.uid}', '${p.pushId}', ${p.price}, '${p.panelId}', '${p.plan}')"><i class="fas fa-undo"></i> Refund</button>`;
+            
+            html += `<tr style="${isRefunded ? 'opacity:0.6;' : ''}">
+                <td style="font-size:12px;">${p.date ? new Date(p.date).toLocaleString() : 'N/A'}</td>
+                <td><strong>${email}</strong><br>${roleBadge}</td>
+                <td><strong>${panelName}</strong><br><span class="badge badge-active" style="margin-top:4px;">${p.label || p.plan || 'N/A'}</span></td>
+                <td style="font-family:monospace; color:var(--accent); font-weight:bold; letter-spacing:1px; background:rgba(255, 214, 0,0.1); padding:5px 10px; border-radius:6px;">${p.key || '-'}</td>
+                <td>${actionBtn}</td>
+            </tr>`;
+        });
+        tbody.innerHTML = html || '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No purchases found</td></tr>';
+    }
+
+    window.refundPurchase = async (uid, pushId, price, panelId, planId) => {
+        if(!confirm(`REFUND ₹${price} to user?`)) return;
+        showLoader(); try {
+            await runTransaction(ref(db, `users/${uid}/balance`), (bal) => (bal || 0) + parseFloat(price));
+            await update(ref(db, `purchases/${uid}/${pushId}`), { status: 'refunded', label: 'REFUNDED' });
+            await set(ref(db, `transactions/${uid}/REF${Date.now()}`), { id: "REF" + Date.now(), type: "refund", amount: price, status: "success", desc: `Purchase Refunded`, date: new Date().toISOString() });
+            showToast("Refunded"); window.loadSection('purchases');
+        } catch(e) { showToast("Failed", "error"); } hideLoader();
+    };
+
+    // Promotions & Coupons
+    async function initPromotionsTable() {
+        const snap = await get(ref(db, 'promotions')); promotionsDataCache = snap.val() || {};
+        const list = document.getElementById('promotions-list'); let html = '';
+        const promoArray = Object.entries(promotionsDataCache).map(([id, data]) => ({ id, ...data })); promoArray.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        if (promoArray.length === 0) { list.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center; padding: 20px;">No promotions currently available</div>'; return; }
+        promoArray.forEach(p => {
+            const isActive = p.status === true || p.status === "true";
+            const imgHTML = p.image ? `<img src="${p.image}" style="width:100%; height:120px; object-fit:cover; border-radius:12px; border:1px solid var(--border);">` : `<div style="width:100%; height:120px; background:rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center; border-radius:12px; color:var(--text-muted); font-size:12px;"><i class="fas fa-image-slash" style="margin-right:5px;"></i> No Image</div>`;
+            const linkHTML = p.link ? `<a href="${p.link}" target="_blank" style="color:var(--accent-secondary); font-size:12px; font-weight:500; text-decoration:none; word-break: break-all;"><i class="fas fa-external-link-alt"></i> ${p.link}</a>` : `<span style="font-size:12px; color:var(--text-muted);">No Link</span>`;
+            html += `<div style="background:rgba(0,0,0,0.2); padding:20px; border-radius:16px; border:1px solid var(--border); display:flex; flex-direction:column; gap:12px;"><div style="display:flex; justify-content:space-between; align-items:center;"><strong style="color:var(--text-main); font-size:15px;">${p.title}</strong><span class="badge ${isActive ? 'badge-success' : 'badge-danger'}">${isActive ? 'Active' : 'Disabled'}</span></div>${imgHTML}${linkHTML}<div style="display:flex; gap:10px; margin-top:5px;"><button class="btn btn-outline btn-sm" style="flex:1;" onclick="window.togglePromo('${p.id}', ${isActive})">${isActive ? '<i class="fas fa-ban"></i> Disable' : '<i class="fas fa-check"></i> Enable'}</button><button class="btn btn-primary btn-sm" onclick="window.openEditPromo('${p.id}')"><i class="fas fa-edit"></i> Edit</button><button class="btn btn-danger btn-sm" onclick="window.deletePromo('${p.id}')"><i class="fas fa-trash"></i> Delete</button></div></div>`;
+        });
+        list.innerHTML = html;
+    }
+    document.getElementById('btn-add-promo').onclick = async () => {
+        const title = document.getElementById('promo-title').value.trim(); const image = document.getElementById('promo-img').value.trim(); const link = document.getElementById('promo-link').value.trim();
+        if (!title) return showToast('Title required', 'error'); showLoader();
+        try { await push(ref(db, 'promotions'), { title, image, link, status: true, createdAt: serverTimestamp() }); showToast('Added!'); document.getElementById('promo-title').value=''; document.getElementById('promo-img').value=''; document.getElementById('promo-link').value=''; window.loadSection('promotions'); } catch(e) { showToast('Failed', 'error'); hideLoader(); }
+    };
+    window.togglePromo = async (id, currentStatus) => { showLoader(); await update(ref(db, `promotions/${id}`), { status: !currentStatus }); window.loadSection('promotions'); };
+    window.deletePromo = async (id) => { if(confirm("Delete?")) { showLoader(); await remove(ref(db, `promotions/${id}`)); window.loadSection('promotions'); } };
+    window.openEditPromo = (id) => { const p = promotionsDataCache[id]; if(!p) return; document.getElementById('edit-promo-id').value = id; document.getElementById('edit-promo-title').value = p.title || ''; document.getElementById('edit-promo-img').value = p.image || ''; document.getElementById('edit-promo-link').value = p.link || ''; openModal('modal-edit-promo'); };
+    document.getElementById('btn-save-edit-promo').onclick = async () => { const id = document.getElementById('edit-promo-id').value; const title = document.getElementById('edit-promo-title').value; if(!title) return showToast('Title empty', 'error'); showLoader(); try { await update(ref(db, `promotions/${id}`), { title, image: document.getElementById('edit-promo-img').value, link: document.getElementById('edit-promo-link').value }); showToast('Updated!'); closeModal('modal-edit-promo'); window.loadSection('promotions'); } catch(e) { showToast('Failed', 'error'); hideLoader(); } };
+
+    async function initCouponsTable() {
+        const snap = await get(ref(db, 'coupons')); const coupons = []; snap.forEach(child => coupons.push({ id: child.key, ...child.val() }));
+        const tbody = document.getElementById('coupons-tbody'); let html = '';
+        if(coupons.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No coupons</td></tr>'; return; }
+        coupons.forEach(c => {
+            const limitText = c.maxUse ? `${c.used || 0} / ${c.maxUse}` : `${c.used || 0} / ∞`;
+            html += `<tr><td><strong style="color:var(--accent); font-family:monospace; background: rgba(255, 214, 0, 0.1); padding: 4px 8px; border-radius: 4px;">${c.code}</strong></td><td style="font-weight: bold; color: var(--success);">${c.discount}%</td><td style="color: var(--text-muted);">${limitText}</td><td><span class="badge ${c.status ? 'badge-success' : 'badge-danger'}">${c.status ? 'Active' : 'Disabled'}</span></td><td style="display:flex; gap:5px;"><button class="btn btn-outline btn-sm" onclick="window.toggleCoupon('${c.id}', ${c.status})">${c.status ? '<i class="fas fa-ban"></i>' : '<i class="fas fa-check"></i>'}</button><button class="btn btn-danger btn-sm" onclick="window.deleteCoupon('${c.id}')"><i class="fas fa-trash"></i></button></td></tr>`;
+        });
+        tbody.innerHTML = html;
+    }
+    document.getElementById('btn-add-coupon').onclick = async () => {
+        const code = document.getElementById('coupon-code').value.trim().toUpperCase(); const discount = parseInt(document.getElementById('coupon-discount').value); const maxUse = document.getElementById('coupon-max').value ? parseInt(document.getElementById('coupon-max').value) : null;
+        if(!code || isNaN(discount)) return showToast('Code & Discount required', 'error'); if(discount <= 0 || discount > 100) return showToast('1-100% only', 'error');
+        showLoader(); try { const snap = await get(ref(db, `coupons`)); let exists = false; if(snap.exists()) { snap.forEach(child => { if(child.val().code === code) exists = true; }); } if(exists) { hideLoader(); return showToast('Code exists', 'error'); } await push(ref(db, 'coupons'), { code, discount, maxUse, used: 0, status: true, createdAt: serverTimestamp() }); showToast('Created!'); document.getElementById('coupon-code').value=''; document.getElementById('coupon-discount').value=''; document.getElementById('coupon-max').value=''; window.loadSection('coupons'); } catch(e) { showToast('Failed', 'error'); hideLoader(); }
+    };
+    window.toggleCoupon = async (id, currentStatus) => { showLoader(); await update(ref(db, `coupons/${id}`), { status: !currentStatus }); window.loadSection('coupons'); };
+    window.deleteCoupon = async (id) => { if(confirm(`Delete coupon?`)) { showLoader(); await remove(ref(db, `coupons/${id}`)); window.loadSection('coupons'); } };
+
+    // Settings
+    async function initSettings() {
+        const [paySnap, depSnap, supSnap, brandSnap] = await Promise.all([get(ref(db, 'settings/payment')), get(ref(db, 'deposit_settings')), get(ref(db, 'support_links')), get(ref(db, 'settings/branding'))]);
+        const payData = paySnap.val() || {}; const depData = depSnap.val() || {};
+        const zapKey = payData.zap_key || depData.zap_key || ''; const upiId = payData.upiId || depData.upi_id || ''; const upiQr = payData.qrImage || depData.upi_qr || '';
+        window.ZAP_KEY = zapKey; document.getElementById('set-zap-key').value = zapKey; document.getElementById('set-upi').value = upiId; document.getElementById('set-qr').value = upiQr;
+        document.getElementById('qr-preview').innerHTML = upiQr ? `<img src="${upiQr}" style="max-width:180px; border-radius:12px; border:1px solid var(--border); margin-top:10px;">` : '';
+        document.getElementById('set-crypto-payid').value = depData.binance_pay_id || ''; document.getElementById('set-crypto-address').value = depData.usdt_address || ''; document.getElementById('set-crypto-rate').value = depData.crypto_rate || ''; document.getElementById('set-crypto-qr').value = depData.crypto_qr || '';
+        document.getElementById('crypto-qr-preview').innerHTML = depData.crypto_qr ? `<img src="${depData.crypto_qr}" style="max-width:180px; border-radius:12px; border:1px solid var(--border); margin-top:10px;">` : '';
+        const supData = supSnap.val(); if(supData) { document.getElementById('set-wa').value = supData.whatsapp || ''; document.getElementById('set-tg-login').value = supData.telegram_login || ''; document.getElementById('set-tg-dash').value = supData.telegram_dashboard || ''; }
+        const brandData = brandSnap.val(); if(brandData) { document.getElementById('brand-name').value = brandData.name || ''; document.getElementById('brand-logo').value = brandData.logo || ''; }
+    }
+    
+    document.getElementById('btn-save-settings').onclick = async () => {
+        showLoader(); try { 
+            const zapKey = document.getElementById('set-zap-key').value.trim(); const upiId = document.getElementById('set-upi').value.trim(); const upiQr = document.getElementById('set-qr').value.trim();
+            await set(ref(db, 'settings/payment'), { zap_key: zapKey, upiId: upiId, qrImage: upiQr }); 
+            await set(ref(db, 'deposit_settings'), { zap_key: zapKey, upi_id: upiId, upi_qr: upiQr, binance_pay_id: document.getElementById('set-crypto-payid').value.trim(), usdt_address: document.getElementById('set-crypto-address').value.trim(), crypto_rate: document.getElementById('set-crypto-rate').value.trim(), crypto_qr: document.getElementById('set-crypto-qr').value.trim() }); 
+            window.ZAP_KEY = zapKey; showToast("Settings Saved!"); 
+        } catch (e) { showToast("Failed to save", "error"); } hideLoader();
+    };
+
+    document.getElementById('btn-save-contact').onclick = async () => { showLoader(); try { await set(ref(db, 'support_links'), { whatsapp: document.getElementById('set-wa').value.trim(), telegram_login: document.getElementById('set-tg-login').value.trim(), telegram_dashboard: document.getElementById('set-tg-dash').value.trim() }); showToast("Support Links Saved!"); } catch (e) { showToast("Failed", "error"); } hideLoader(); };
+    document.getElementById('btn-save-branding').onclick = async () => { showLoader(); try { await set(ref(db, 'settings/branding'), { name: document.getElementById('brand-name').value, logo: document.getElementById('brand-logo').value }); showToast("Branding Updated!"); initBranding(); } catch (e) { showToast("Failed", "error"); } hideLoader(); };
+
+    function initBranding(){ get(ref(db, 'settings/branding')).then(snap => { const data = snap.val(); if(!data) { document.getElementById('admin-brand-text').innerText = "ADMIN PRO"; return; } if(data.name) document.getElementById('admin-brand-text').innerText = data.name.toUpperCase(); if(data.logo && data.logo.length > 5){ const logoImg = document.getElementById('admin-brand-logo'); const icon = document.getElementById('admin-brand-icon'); logoImg.src = data.logo; logoImg.style.display = 'inline-block'; icon.style.display = 'none'; } }); }
+
+    // Re-use balance modal for users
+    document.getElementById('btn-save-balance').onclick = async () => {
+        const uid = document.getElementById('edit-bal-uid').value; const current = parseFloat(document.getElementById('edit-bal-current').value); const amount = parseFloat(document.getElementById('edit-bal-amount').value); const type = document.getElementById('edit-bal-type').value;
+        if(isNaN(amount) || amount < 0) return showToast("Valid number required", "error");
+        let newBal = current; let diff = amount; let desc = "";
+        if(type === 'add') { newBal += amount; desc = "Admin Added Funds"; } if(type === 'deduct') { newBal = Math.max(0, newBal - amount); desc = "Admin Deducted Funds"; diff = -amount; } if(type === 'set') { newBal = amount; desc = "Admin Set Exact Balance"; diff = newBal - current; }
+        showLoader(); try { await update(ref(db, `users/${uid}`), { balance: newBal }); const txId = "ADM" + Date.now(); await set(ref(db, `transactions/${uid}/${txId}`), { id: txId, type: "admin_edit", amount: diff, status: "success", desc: desc, date: new Date().toISOString() }); showToast("Balance updated"); closeModal('modal-balance'); window.loadSection(document.querySelector('.nav-item.active').getAttribute('data-target')); } catch(e) { showToast("Update failed", "error"); hideLoader(); } 
+    };
+
+</script>
+</body>
+</html>
